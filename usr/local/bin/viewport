@@ -1,0 +1,36 @@
+#!/bin/bash
+function trap_signal() {
+	hsetroot -full /usr/local/share/pixmaps/exit-status.png
+	kill -9 $(<~/.viewport.pid)
+	exit
+}
+function get_vm_ip() {
+	echo $(virsh net-dhcp-leases default) \
+		| grep ipv4 \
+		| sed -r 's/^.*(192[^/]+).*$/\1/'
+}
+trap trap_signal SIGINT SIGQUIT SIGKILL SIGTERM
+rm ~/.viewport.pid
+while true; do
+	xfreerdp \
+		/v:$(get_vm_ip) \
+		/sec:rdp \
+		/u:'kiosk user' \
+		/p:lemonjello \
+		/size:1664x1080 \
+		/cert-tofu \
+		/cert:ignore \
+		/sound:sys:alsa &
+	# vncviewer -geometry 1680x1050+0+0 -shared localhost:5900 & 
+	PID=$!
+	echo $PID > ~/.viewport.pid
+	hsetroot -full /usr/local/share/pixmaps/tech-status.png
+	while ps -p $PID &>/dev/null ; do
+		WINDOW_NAME="FreeRDP: $(get_vm_ip)"
+		xprop -name "${WINDOW_NAME}" &> /dev/null && {
+			wmctrl -r "${WINDOW_NAME}" -b add,below,skip_taskbar
+		}
+		sleep 1
+	done
+	sleep 1
+done

@@ -1,0 +1,12 @@
+#!/bin/bash
+[ `id -u` -ne 0 ] && {
+	sudo $0 $@
+	exit $?
+}
+
+wget -q https://xpra.org/gpg.asc -O- | sudo apt-key add -
+pushd /etc/apt/sources.list.d
+wget https://xpra.org/repos/focal/xpra.list -O xpra.list
+apt update
+apt install xpra
+

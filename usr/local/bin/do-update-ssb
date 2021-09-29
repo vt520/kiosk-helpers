@@ -1,0 +1,35 @@
+#!/bin/bash
+SSB_CONFIG="/home/kiosk/.config/ssb"
+APP_LOCATION="/home/kiosk/.local/share/applications"
+SSB_CACHE="/home/kiosk/.chrome"
+pushd /usr/local/share/browsers
+function emit_desktop() {
+	EXEC=$1
+	shift
+	ICON=$1
+	shift
+	NAME=$@
+	echo "[Desktop Entry]"
+	echo "Encoding=UTF-8"
+	echo "Version=1.0"
+	echo "Type=Application"
+	echo "Terminal=false"
+	echo "Exec=/home/kiosk/bin/${EXEC}"
+	echo "Type=Application"
+	echo "Name=${NAME}"
+	echo "Icon=${ICON}"
+	echo "StartupWMClass=SSB.${EXEC}/window"
+}
+mkdir -p "/home/kiosk/bin" &> /dev/null
+rm -r /home/kiosk/.cache /home/kiosk/snap &> /dev/null
+for CONFIG in *.settings; do
+	SSB_NAME=${CONFIG%".settings"}
+	source $CONFIG
+	rm "/home/kiosk/bin/$SSB_NAME" &> /dev/null
+	rm -rf "$SSB_CACHE/$SSB_NAME" &> /dev/null
+	ln -s /usr/local/bin/ssb "/home/kiosk/bin/$SSB_NAME"
+	mkdir -p $SSB_CONFIG &> /dev/null
+	echo $URI > $SSB_CONFIG/$SSB_NAME
+	emit_desktop $SSB_NAME $ICON $DESCRIPTION >  $APP_LOCATION/$SSB_NAME.desktop
+	echo $SSB_NAME
+done

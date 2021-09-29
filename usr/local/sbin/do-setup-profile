@@ -1,0 +1,13 @@
+#!/bin/bash
+[ `id -u` -ne 0 ] && {
+	sudo $0 $@
+	exit $?
+}
+SOURCE_FOLDER='/home/persist'
+DEST_FOLDER='/home/kiosk'
+pushd $SOURCE_FOLDER
+for FILE in .[^.]* *; do
+	rm -rf $DEST_FOLDER/$FILE
+	cp -Rp $FILE $DEST_FOLDER/$FILE
+done
+popd

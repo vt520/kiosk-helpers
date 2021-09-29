@@ -1,0 +1,7 @@
+#!/bin/bash
+SOURCE_QCOW='/home/kiosk/image.qcow2'
+RUN_QCOW='/home/kiosk/domain.qcow2'
+virsh destroy --domain win10-ro &> /dev/null
+rm -f $RUN_QCOW &> /dev/null
+cp -p $SOURCE_QCOW $RUN_QCOW
+virsh create ~/domain.xml
