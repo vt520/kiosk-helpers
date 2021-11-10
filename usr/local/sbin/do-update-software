@@ -12,17 +12,23 @@ pushd /setup/software
 
 SYSTEM_CURRENT=$(do-system-snapshot | grep -i ready | sed -r "s/^[^/]*(.*[.]tbz).*$/\1/")
 if [ -e kiosk-helpers ]; then
-	rm -rf kiosk-helpers
-else
-        sudo -u kiosk git clone git@github.com:vt520/kiosk-helpers.git;
-	cd kiosk-helpers
+        rm -rf kiosk-helpers
 fi
 
+echo "Getting new system software from GIT"
+
+sudo -u kiosk git clone git@github.com:vt520/kiosk-helpers.git >> .update;
+cd kiosk-helpers
+
+echo "Changing permissions"
+
 while read USER MODE PATH ; do
-	[ -z $PATH ] && continue;
-	echo Changing permissions $PATH $USER $MODE
-	/usr/bin/chown -R $USER $PATH;
-	/usr/bin/chmod -R $MODE $PATH;
+        [ -z $PATH ] && continue;
+        echo Changing permissions $PATH $USER $MODE
+        /usr/bin/chown -R $USER $PATH;
+        /usr/bin/chmod -R $MODE $PATH;
 done < setup/permissions.list
+
+echo "Removing protected files"
 
 popd
