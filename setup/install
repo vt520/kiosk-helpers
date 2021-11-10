@@ -1,0 +1,55 @@
+#!/bin/bash
+
+. /etc/profile
+
+[ `id -u` -ne 0 ] && {
+        echo "Raising permissions"
+        sudo -Eu root $0 $@
+        exit $?
+}
+
+SETTINGS_FILE=/etc/kiosk/settings
+
+KIOSK_DEFAULT_USER=$(id -nu 1000)
+KIOSK_DEFAULT_GROUP=$(id -ng 1000)
+
+function ask() {
+	BUFFER=""
+	[ -n "$1" ]  && { # Prompt
+		[ -n "$2" ] && { # Default
+			read -p "$1: " -ei $2 BUFFER
+			[ -z $BUFFER ] && BUFFER="$2"
+		} || {
+			read -p "$1: " -e BUFFER
+		}
+	}
+	echo $BUFFER
+}
+
+
+INSTALL_MODE="Initial"
+[ -e $SETTINGS_FILE ] && INSTALL_MODE="Upgrade"
+cat <<- EOF
+SD/IO Installation program; detected $INSTALL_MODE installation
+EOF
+
+pushd .
+until [ -e $(pwd)/.git ]; do
+	cd ..
+	[ "$(pwd)" == "/" ] && {
+		cat <<- EOF
+			Could not gind the GIT repository while searching up the directory tree
+			please try again from the setup or kiosk-helpers directory.
+		EOF
+		exit 1
+	}
+done
+SETUP_LOCATION=$(pwd)
+popd
+pushd $SETUP_LOCATION
+chown -R $KIOSK_DEFAULT_USER:$KIOSK_DEFAULT_GROUP .
+chmod a+x setup/permissions
+setup/permissions
+
+sudo -Eu $KIOSK_DEFAULT_USER git pull
+popd

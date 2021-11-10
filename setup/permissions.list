@@ -1,5 +1,7 @@
 root:root a+rx,a-w usr
 root:root a+rx,a-w etc
 root:root u+rwx,go-w home
-kiosk:kiosk u+rwx,go-w home/kiosk
+:runtime: u+rwx,go-w home/kiosk
 root:root a+rx,a-r var
+root:root go+rx,go-w,u+rwx usr/local/bin/*
+root:root g+rx,o-rx,go-w,u+rwx usr/local/bin/*

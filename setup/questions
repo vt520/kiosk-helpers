@@ -1,0 +1,11 @@
+KIOSK_ID			The ID Number of the Kiosk
+
+KIOSK_MANAGEMENT_SERVER		The management hostname for the reflector server
+KIOSK_MANAGEMENT_USER		The username SD/OS will use to connect to the reflector server
+KIOSK_MANAGEMENT_IDENTITY	Path to the RSA key you have registered with the reflector
+KIOSK_MANAGEMENT_PORT		The Management servers publically accessible port
+KIOSK_BASE_SSH			The base SSH Access Port
+KIOSK_BASE_VNC			The base VNC Port
+
+KIOSK_SOURCE_IMAGE_NAME		The file name of the QCOW2 that will be copied into KVM
+KIOSK_SOURCE_UUID		The UUID found in the 
