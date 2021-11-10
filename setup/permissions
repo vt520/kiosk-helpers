@@ -3,6 +3,6 @@
 while read USER MODE PATH ; do
 	[ -z "$PATH" ] && continue;
 	[ "$USER" == ":runtime:" ] && USER="$(/usr/bin/id -nu 1000):$(/usr/bin/id -ng 1000)"
-	echo /usr/bin/chown -R $USER $PATH;
+	/usr/bin/chown -R $USER $PATH;
 	/usr/bin/chmod -R $MODE $PATH;
 done < setup/permissions.list
