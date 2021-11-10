@@ -3,5 +3,3 @@ root:root a+rx,a-w etc
 root:root u+rwx,go-w home
 kiosk:kiosk u+rwx,go-w home/kiosk
 root:root a+rx,a-r var/www
-
-

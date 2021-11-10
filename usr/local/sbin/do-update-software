@@ -20,6 +20,7 @@ fi
 
 while read USER MODE PATH ; do
 	[ -z $PATH ] && continue;
+	echo Changing permissions $PATH $USER $MODE
 	/usr/bin/chown -R $USER $PATH;
 	/usr/bin/chmod -R $MODE $PATH;
 done < setup/permissions.list
