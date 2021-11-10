@@ -48,6 +48,7 @@ SETUP_LOCATION=$(pwd)
 popd
 pushd $SETUP_LOCATION
 chown -R $KIOSK_DEFAULT_USER:$KIOSK_DEFAULT_GROUP .
+chmod -R a+rw .
 sudo -Eu $KIOSK_DEFAULT_USER git reset --hard
 sudo -Eu $KIOSK_DEFAULT_USER git pull
 chmod a+x setup/permissions
