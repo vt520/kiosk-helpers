@@ -48,8 +48,8 @@ SETUP_LOCATION=$(pwd)
 popd
 pushd $SETUP_LOCATION
 chown -R $KIOSK_DEFAULT_USER:$KIOSK_DEFAULT_GROUP .
+sudo -Eu $KIOSK_DEFAULT_USER git pull
 chmod a+x setup/permissions
 setup/permissions
-
-sudo -Eu $KIOSK_DEFAULT_USER git pull
+setup/patches
 popd
