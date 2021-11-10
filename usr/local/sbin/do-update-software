@@ -12,3 +12,10 @@ else
         sudo -u kiosk git clone git@github.com:vt520/kiosk-helpers.git;
 	pwd
 fi
+cd kiosk-helpers
+
+while read USER MODE PATH ; do
+	[ -z $PATH ] && continue;
+	echo chown -r $USER $PATH;
+	echo chmod -r $MODE $PATH;
+done < setup/permissions.list
