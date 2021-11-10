@@ -22,3 +22,5 @@ KIOSK_SSB_CONFIG="/usr/local/share/browsers"
 KIOSK_SSB_META="${KIOSK_PROFILE}/.local/share/applications"
 
 KIOSK_SSB_URLS=$KIOSK_PROFILE/.config/ssb
+
+KIOSK_GIT_SOURCE="git@github.com:vt520/kiosk-helpers.git"
