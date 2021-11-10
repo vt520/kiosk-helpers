@@ -1,5 +1,16 @@
 #!/bin/bash
 
-for FILE in $(find . -type f); do
-	[ -e "/$FILE" ] && echo Found $FILE
+for FILE in $(find -type f); do
+	FILE="${FILE#./}"
+	[ -e "/$FILE" ] && {
+		echo Found $FILE
+		mkdir -p patches/$(dirname $FILE) 2> /dev/null
+		diff "/$FILE" "$FILE" > "patches/${FILE}.patch" && {
+			echo Patch created
+		} || {
+
+			echo Could not patch
+		}
+		rm "$FILE"
+	}
 done
