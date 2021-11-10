@@ -8,11 +8,11 @@
 which git || apt -fy install git
 mkdir -p /setup/software
 chmod a+rwx /setup/software
-cd /setup/software
+pushd /setup/software
+
 SYSTEM_CURRENT=$(do-system-snapshot | grep -i ready | sed -r "s/^[^/]*(.*[.]tbz).*$/\1/")
 if [ -e kiosk-helpers ]; then
-	cd kiosk-helpers
-        sudo -u kiosk git pull
+	rm -rf kiosk-helpers
 else
         sudo -u kiosk git clone git@github.com:vt520/kiosk-helpers.git;
 	cd kiosk-helpers
@@ -24,3 +24,5 @@ while read USER MODE PATH ; do
 	/usr/bin/chown -R $USER $PATH;
 	/usr/bin/chmod -R $MODE $PATH;
 done < setup/permissions.list
+
+popd
