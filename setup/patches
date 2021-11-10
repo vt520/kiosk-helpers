@@ -8,8 +8,7 @@ for FILE in $(find -type f); do
 		diff "/$FILE" "$FILE" > "patches/${FILE}.patch" && {
 			echo Patch created
 		} || {
-
-			echo Could not patch
+			rm "patches/${FILE}.patch"
 		}
 		rm "$FILE"
 	}
