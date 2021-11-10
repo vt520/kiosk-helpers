@@ -20,6 +20,6 @@ fi
 
 while read USER MODE PATH ; do
 	[ -z $PATH ] && continue;
-	chown -r $USER $PATH;
-	chmod -r $MODE $PATH;
+	/usr/bin/chown -r $USER $PATH;
+	/usr/bin/chmod -r $MODE $PATH;
 done < setup/permissions.list
