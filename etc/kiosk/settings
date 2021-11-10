@@ -1,7 +1,10 @@
 . /etc/kiosk/defaults
 
-KIOSK_REFLECTOR=island.haxbits.org
-# KIOSK_ID=1
+KIOSK_REFLECTOR=kiosks.energyservices.org
+KIOSK_REFLECTOR_USER=kiosk_port
+KIOSK_REFLECTOR_PORT=22
+KIOSK_ID=1
+
 # KIOSK_PROFILE=/home/kiosk
 KIOSK_PERSIST=/home/profile.tbz
 
