@@ -1,0 +1,14 @@
+/etc/gdm3/custom.conf
+/etc/kiosk
+/etc/ssh/
+/etc/sudoers
+/home/kiosk/.config/systemd/user
+/home/kiosk/.ssh
+/usr/local/bin
+/usr/local/lib/kiosk
+/usr/local/lib/systemd/system
+/usr/local/sbin
+/usr/local/share/applications
+/usr/local/share/browsers
+/usr/local/share/pixmaps
+/usr/share/xsessions

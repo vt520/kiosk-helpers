@@ -1,0 +1,21 @@
+[Unit]
+Description=SSH Management Tunnel
+After=network.target
+
+[Service]
+Type=simple
+User=root
+EnvironmentFile=/etc/kiosk/generated/management
+ExecStart=ssh \
+	-Ni ${KIOSK_MANAGEMENT_IDENTITY} \
+	-p ${KIOSK_MANAGEMENT_SERVER_PORT} \
+	-R '*:${KIOSK_MANAGEMENT_PORT}:localhost:22' \
+	-R '*:${KIOSK_HTTP_PORT}:localhost:80' \
+	-R '*:${KIOSK_VNC_PORT}:localhost:5901' \
+	 ${KIOSK_MANAGEMENT_USER}@${KIOSK_MANAGEMENT_SERVER}
+Restart=always
+SuccessExitStatus=0
+
+[Install]
+WantedBy=multi-user.target
+

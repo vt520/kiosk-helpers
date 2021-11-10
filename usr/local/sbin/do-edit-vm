@@ -1,0 +1,17 @@
+#!/bin/bash
+source /usr/local/lib/kiosk/administration
+[ "$1" == "-watch" ] && {
+	while virsh domstate win10 | grep running > /dev/null; do
+		sleep 1;
+	done;
+	do-rebase-domain && do-reload-domain
+	exit $?
+}
+virsh domstate win10 | grep running > /dev/null && {
+	echo "Already RW"
+	exit 0
+}
+virsh destroy win10-ro
+virsh start win10
+screen -d -m -S -- $0 -watch
+exit 0

@@ -1,0 +1,37 @@
+#!/bin/bash
+while getopts "t:c:n:" PARAMETER; do
+        case "$PARAMETER" in
+                "t") TIME=${OPTARG};;
+                "n") NAME=${OPTARG};;
+                "c") CANCEL=${OPTARG};;
+                *) exit 1;;
+        esac
+done
+shift $(( $OPTIND - 1 ))
+SCREEN_NAME="defer_${NAME}"
+
+( [ "$TIME" ] && [ "$NAME" ] ) && [ -z "$CANCEL" ] && {
+	TIME=$(( 1 * $TIME ))
+	[ $TIME -lt 1 ] && {
+		echo "Timeout $TIME must be greater than or equal to 1 second";
+		exit
+	}
+	# start defer with name
+	screen -S "${SCREEN_NAME}" -dm $0 -t ${TIME} $@
+	exit 0
+}
+
+[ "$CANCEL" ] && ( [ -z "$TIME" ] && [ -z "$NAME" ] ) && {
+	# Cancel Defer
+	#screen -X -S "${SCREEN_NAME}" "^C"
+	screen -X -S "${SCREEN_NAME}" "quit"
+	exit 0
+}
+
+[ "$TIME" ] && ( [ -z "$NAME" ] && [ -z "$CANCEL" ] ) && {
+	echo $TIME
+	sleep $TIME && $@
+	exit $?
+}
+echo "$0 [ -n name -t timeout ] | [ -c name ] command"
+exit 1
