@@ -1,7 +1,7 @@
 #!/bin/bash
 function trap_signal() {
 	hsetroot -full /usr/local/share/pixmaps/exit-status.png
-	kill -9 $(<~/.viewport.pid)
+	screen -S xfreerdp -X quit
 	exit
 }
 function get_vm_ip() {
@@ -9,28 +9,46 @@ function get_vm_ip() {
 		| grep ipv4 \
 		| sed -r 's/^.*(192[^/]+).*$/\1/'
 }
-trap trap_signal SIGINT SIGQUIT SIGKILL SIGTERM
-rm ~/.viewport.pid
+trap trap_signal SIGKILL
+
+xset s off
+xset -dpms
+xset s noblank
+
+echo $(get_vm_ip)
+until ping -qc 1 $(get_vm_ip) &> /dev/null ; do echo -n "."; sleep 1; done
+echo Connecting
+sleep 4
+WINDOW_NAME="FreeRDP: $(get_vm_ip)"
 while true; do
-	xfreerdp \
+	defer-action -n tech -t 30 hsetroot -full /usr/local/share/pixmaps/tech-status.png
+	while screen -list | grep -w xfreerdp &>/dev/null ; do sleep .5; done
+	screen -S xfreerdp -dm xfreerdp \
 		/v:$(get_vm_ip) \
-		/sec:rdp \
+		/sec:tls \
 		/u:'kiosk user' \
 		/p:lemonjello \
 		/size:1664x1080 \
 		/cert-tofu \
 		/cert:ignore \
-		/sound:sys:alsa &
-	# vncviewer -geometry 1680x1050+0+0 -shared localhost:5900 & 
-	PID=$!
-	echo $PID > ~/.viewport.pid
-	hsetroot -full /usr/local/share/pixmaps/tech-status.png
-	while ps -p $PID &>/dev/null ; do
-		WINDOW_NAME="FreeRDP: $(get_vm_ip)"
-		xprop -name "${WINDOW_NAME}" &> /dev/null && {
-			wmctrl -r "${WINDOW_NAME}" -b add,below,skip_taskbar
+		/scale:100 \
+		/auto-reconnect-max-retries:0 \
+		/sound:sys:alsa \
+		-auto-reconnect
+
+	echo waiting for "/$WINDOW_NAME/"
+	until xprop -name "${WINDOW_NAME}" &> /dev/null; do
+		screen -list | grep -w xfreerdp &>/dev/null || {
+			echo "CConnection failed"
+			break;
 		}
-		sleep 1
+		echo -n "."
+		ping -qc 1 $(get_vm_ip) &> /dev/null || {
+			echo "Host down, quitting"
+			exit 1
+		}
 	done
-	sleep 1
+	defer-action -c tech
+	wmctrl -r "${WINDOW_NAME}" -b add,below,skip_taskbar
 done
+echo Something Failed

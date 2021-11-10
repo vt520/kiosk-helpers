@@ -1,0 +1,15 @@
+server {
+    listen         80 default_server;
+    listen         [::]:80 default_server;
+    server_name    island.haxbits.org:8080;
+    root           /var/www/html/;
+    index          index.php;
+    rewrite ^/api/(.*)[/]?$ /index.php?module=$1 last;
+  location ~* \.php$ {
+    fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+    include         fastcgi_params;
+    fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+    fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+  }
+  error_log  /var/log/nginx/nginx_error.log  warn;
+}

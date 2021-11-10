@@ -15,4 +15,4 @@
 #	--opengl \
 #	--input-method=xim \
 #	--bind-rfb=0.0.0.0:5901,auth=none
-x11vnc -display :0 -rfbport 5901 -forever
+x11vnc -display :0 -rfbport 5901 -forever -shared

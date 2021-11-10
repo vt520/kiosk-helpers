@@ -1,0 +1,7 @@
+root:root a+rx,a-w usr
+root:root a+rx,a-w etc
+root:root u+rwx,go-w home
+kiosk:kiosk u+rwx,go-w home/kiosk
+
+
+

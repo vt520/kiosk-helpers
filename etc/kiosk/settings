@@ -1,10 +1,7 @@
 . /etc/kiosk/defaults
 
-KIOSK_REFLECTOR=kiosks.energyservices.org
-KIOSK_REFLECTOR_USER=kiosk_port
-KIOSK_REFLECTOR_PORT=22
-KIOSK_ID=1
-
+KIOSK_REFLECTOR=island.haxbits.org
+# KIOSK_ID=1
 # KIOSK_PROFILE=/home/kiosk
 KIOSK_PERSIST=/home/profile.tbz
 
@@ -22,5 +19,3 @@ KIOSK_SSB_CONFIG="/usr/local/share/browsers"
 KIOSK_SSB_META="${KIOSK_PROFILE}/.local/share/applications"
 
 KIOSK_SSB_URLS=$KIOSK_PROFILE/.config/ssb
-
-KIOSK_GIT_SOURCE="git@github.com:vt520/kiosk-helpers.git"

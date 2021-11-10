@@ -1,12 +1,27 @@
 #!/bin/bash
-[ `id -u` -ne 0 ] && {
-	sudo $0 $@
-	exit $?
-}
-SOURCE_FOLDER='/home/kiosk'
-DEST_FILE='/home/profile.tbz'
+source /usr/local/lib/kiosk/administration
 
-service gdm stop
-pushd $SOURCE_FOLDER
-	sudo tar cjpf $DEST_FILE --exclude="*.qcow2" -- .[^.]* *
-popd
+SOURCE_FOLDER='/home/kiosk'
+ARCHIVE_STAMP="${KIOSK_TIMESTAMP}.tbz"
+ARCHIVE_FILE=${KIOSK_PERSIST%%.tbz}-${ARCHIVE_STAMP}
+
+echo Saving snapshot to archive: $ARCHIVE_FILE
+service gdm stop &> /dev/null
+EXCLUDE=$(tempfile -p exclude)
+pushd $KIOSK_PROFILE &> /dev/null
+
+	set -o noglob
+	for AMASK in $KIOSK_PERSIST_IGNORE; do
+		find ./ -iname $AMASK
+	done | sed -r 's/^[.]\///g' > $EXCLUDE
+	set +o noglob
+
+	echo Ignoring $(wc -l <$EXCLUDE) transient files
+	echo Starting archival ...
+
+	sudo tar -X $EXCLUDE -cjpf "${ARCHIVE_FILE}" -- $(find -maxdepth 1 -iname "??*" | sed -r 's/^[.]\///g')
+	echo Archive done: $(tar -tjf $ARCHIVE_FILE | wc -l) files saved
+popd &> /dev/null
+rm $KIOSK_PERSIST
+ln -s "$ARCHIVE_FILE" "$KIOSK_PERSIST"
+rm $EXCLUDE

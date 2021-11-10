@@ -2,6 +2,7 @@
 /etc/kiosk
 /etc/ssh/
 /etc/sudoers
+/etc/nginx
 /home/kiosk/.config/systemd/user
 /home/kiosk/.ssh
 /usr/local/bin
@@ -12,3 +13,4 @@
 /usr/local/share/browsers
 /usr/local/share/pixmaps
 /usr/share/xsessions
+/var/www/html
