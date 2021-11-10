@@ -15,12 +15,11 @@ if [ -e kiosk-helpers ]; then
         sudo -u kiosk git pull
 else
         sudo -u kiosk git clone git@github.com:vt520/kiosk-helpers.git;
-	pwd
+	cd kiosk-helpers
 fi
-cd kiosk-helpers
 
 while read USER MODE PATH ; do
 	[ -z $PATH ] && continue;
-	echo chown -r $USER $PATH;
-	echo chmod -r $MODE $PATH;
+	chown -r $USER $PATH;
+	chmod -r $MODE $PATH;
 done < setup/permissions.list
