@@ -1,8 +1,10 @@
 /etc/gdm3/custom.conf
 /etc/kiosk
+/etc/libvirt/qemu/networks
+/etc/libvirt/qemu/win10.xml
+/etc/nginx
 /etc/ssh/
 /etc/sudoers
-/etc/nginx
 /home/kiosk/.config/systemd/user
 /home/kiosk/.ssh
 /usr/local/bin
