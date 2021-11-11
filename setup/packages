@@ -8,10 +8,10 @@ echo "Upgrading base packages"
 echo "Checking individual packages ( $( wc -l < setup/packages.list ) packages total )"
 while read PACKAGE ; do
 	[ -z "$PACKAGE" ] && continue;
-	echo "$PACKAGE "
+	echo "Checking $PACKAGE"
 	(
-		( echo -n " downloading... ";	apt-get install -qqdy $PACKAGE ) \
-		&& ( echo -n "installing... "; apt-get install -qqy $PACKAGE )
+		( apt-get install -qqdy $PACKAGE ) \
+		&& ( apt-get install -qqy $PACKAGE )
 	) || {
 		echo $PACKAGE failed to install
 		exit 1
