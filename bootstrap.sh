@@ -57,7 +57,7 @@ decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 		echo mv "$FOLDER" /setup
 	SCRIPT
 }
-[ -e /setup/kiosk-helpers ] cd /setup/kiosk-helpers
+[ -e /setup/kiosk-helpers ] && cd /setup/kiosk-helpers
 
 echo "Updating to current"
 USER_ID=$(id -nu) sudo -e -- bash -cs -- <<- SCRIPT
