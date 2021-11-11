@@ -2,56 +2,43 @@
 
 . /etc/profile
 
-[ `id -u` -ne 0 ] && {
-        echo "Raising permissions"
-        sudo -Eu root $0 $@
+EXEC_USER_ID=$(id -u)
+[ $EXEC_USER_ID -ne 0 ] && {
+        PERM_USER_ID=$EXEC_USER_ID sudo -Eu root $0 $@
         exit $?
 }
 
-SETTINGS_FILE=/etc/kiosk/settings
+PERM_USER="$(id -nu 1000)"
+PERM_GROUP="$(id -ng 1000)"
+EXEC_FOLDER="$(pwd)"
 
-KIOSK_DEFAULT_USER=$(id -nu 1000)
-KIOSK_DEFAULT_GROUP=$(id -ng 1000)
-
-function ask() {
-	BUFFER=""
-	[ -n "$1" ]  && { # Prompt
-		[ -n "$2" ] && { # Default
-			read -p "$1: " -ei $2 BUFFER
-			[ -z $BUFFER ] && BUFFER="$2"
-		} || {
-			read -p "$1: " -e BUFFER
-		}
-	}
-	echo $BUFFER
-}
-
-
-INSTALL_MODE="Initial"
-[ -e $SETTINGS_FILE ] && INSTALL_MODE="Upgrade"
 cat <<- EOF
-SD/IO Installation program; detected $INSTALL_MODE installation
+	Welcome to the SD/IO Installer
+	Please wait while we freshen things up a bit
 EOF
 
-pushd . > /dev/null
-	until [ -e $(pwd)/.git ]; do
-		cd ..
-		[ "$(pwd)" == "/" ] && {
-			cat <<- EOF
-				Could not gind the GIT repository while searching up the directory tree
-				please try again from the setup or kiosk-helpers directory.
-			EOF
-			exit 1
-		}
-	done
-	SETUP_LOCATION=$(pwd)
-popd > /dev/null
+until [ -e $(pwd)/.git ]; do
+	cd ..
+	[ "$(pwd)" == "/" ] && {
+		cat <<- EOF
+			Could not find the GIT repository while searching up the directory tree
+			please try again from the setup or kiosk-helpers directory.
+		EOF
+		cd "$EXEC_FOLDER"
+		exit 1
+	}
+done
 
-pushd $SETUP_LOCATION > /dev/null
-	chown -R $KIOSK_DEFAULT_USER:$KIOSK_DEFAULT_GROUP .
-	chmod -R a+rw .
-	sudo -Eu $KIOSK_DEFAULT_USER git reset --hard
-	sudo -Eu $KIOSK_DEFAULT_USER git pull
-	chmod a+x setup/postgit
-	source setup/postgit
-popd > /dev/null
+SETUP_LOCATION="$(pwd)/setup"
+
+echo "Setting folder permissions"
+chown -R "$PERM_USER:$PERM_GROUP" -- .
+chmod -R a+rw .
+
+echo "Updating Source"
+sudo -Eu "$PERM_USER" -- git reset --hard
+sudo -Eu "$PERM_USER" -- git pull
+
+echo "Continuing Setup with fresh source"
+chmod a+x setup/postgit
+source setup/postgit
