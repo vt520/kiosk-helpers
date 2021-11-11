@@ -8,7 +8,10 @@ cd ..
 chmod +x setup/permissions
 setup/permissions
 
-# Determine install mode
+echo "Checking installed packages"
+setup/packages
+
+echo "Determining install mode"
 SETUP_CONFIG="/etc/kiosk/setup"
 
 [ -e "$SETUP_CONFIG" ] && INSTALL_MODE="Upgrade"
