@@ -3,7 +3,6 @@
 for FILE in $(find -type f); do
 	FILE="${FILE#./}"
 	[ -e "/$FILE" ] && {
-		echo Found $FILE
 		PATCH="patches/$FILE"
 		mkdir -p $(dirname $PATCH) 2> /dev/null
 		diff -a "/$FILE" "$FILE" > $PATCH
