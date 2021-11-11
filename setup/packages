@@ -10,8 +10,8 @@ while read PACKAGE ; do
 	[ -z "$PACKAGE" ] && continue;
 	echo -n "$PACKAGE "
 	(
-		( echo -n " downloading... ";	apt-get install -qdy $PACKAGE ) \
-		|| ( echo -n "installing... "; apt-get install -qy $PACKAGE )
+		( echo -n " downloading... ";	apt-get install -qdy $PACKAGE > /dev/null ) \
+		|| ( echo -n "installing... "; apt-get install -qy $PACKAGE > /dev/null )
 	) || {
 		echo $PACKAGE failed to install
 		exit 1
