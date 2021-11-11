@@ -1,4 +1,3 @@
-bad-package-fart
 libvirt0 
 libvirt-daemon 
 virt-manager 
@@ -9,7 +8,7 @@ wmctrl
 sawfish 
 sawfish-themes 
 chromium-browser 
-gdm 
+gdm3 
 libxm4 
 hsetroot 
 x11vnc
