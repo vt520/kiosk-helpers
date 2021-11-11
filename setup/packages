@@ -11,7 +11,8 @@ while read PACKAGE ; do
 	echo "Checking $PACKAGE"
 	(
 		( apt-get install -qqdy $PACKAGE ) \
-		&& ( apt-get install -qqy $PACKAGE )
+		&& ( DEBIAN_FRONTEND=noninteractive \
+ 			apt-get install -qqy $PACKAGE )
 	) || {
 		echo $PACKAGE failed to install
 		exit 1
