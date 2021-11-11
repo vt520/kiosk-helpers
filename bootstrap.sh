@@ -50,7 +50,7 @@ decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 }
 
 echo "$FOLDER/.git/"
-[ -e "${FOLDER}/.git/" ] && {
+[ -e "${FOLDER}/.git/" ] || {
 	echo "Creating repository information"
 	cd "$FOLDER"
 	git clone --bare git@github.com:vt520/kiosk-helpers.git .git
