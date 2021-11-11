@@ -65,8 +65,8 @@ USER_ID="$(id -nu):$(id -ng)"
 
 sudo -- chown -R $USER_ID /setup/kiosk-helpers
 
-echo git reset --hard
-echo git pull
+git reset --hard
+git pull
 
 sudo -- chown -R root:root /setup/kiosk-helpers
 sudo -- chmod +x /setup/kiosk-helpers/setup
