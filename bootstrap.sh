@@ -34,10 +34,10 @@ This is going to change your SSH User keys and the location of this repo.
 The keys are pre-registered with the remote server for immediate access.
 The repository will be moved to /setup and have proper permissions applied
 
-type "YES OKAY" without quotes to proceed; anything else to exit
+type "BAIL" without quotes to exit; anything else to continue
 EOF
 read -p "Proceed? > " -e PROCEED
-[ "$PROCEED" != "YES OKAY" ] || exit
+[ "$PROCEED" != "BAIL" ] || exit
 
 cd ~
 [ -e .ssh ] || mkdir .ssh
