@@ -35,5 +35,6 @@ EOF
 
 read -p "INSTALL> " -ie PROMPT
 [ "$PROMPT" == "YES PLEASE" ] && {
-	echo okay good
+	cd /
+	tar xjpPf $SYSTEM_TARBALL
 }
