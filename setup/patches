@@ -4,9 +4,12 @@ for FILE in $(find -type f); do
 	FILE="${FILE#./}"
 	[ -e "/$FILE" ] && {
 		echo Found $FILE
-		mkdir -p patches/$(dirname $FILE) 2> /dev/null
-		diff "/$FILE" "$FILE" > "patches/${FILE}.patch" || {
-			rm "patches/${FILE}.patch"
+		PATCH="patches/$FILE"
+		mkdir -p $(dirname $PATCH) 2> /dev/null
+		diff -a "/$FILE" "$FILE" > $PATCH
+		DIFF=$?
+		[ $DIFF -ne 1 ] && {
+			rm $PATCH
 		}
 		rm "$FILE"
 	}
