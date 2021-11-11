@@ -51,6 +51,7 @@ decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 
 [ -e "${FOLDER}/.git/" ] && {
 	echo "Creating repository information"
+	cd "$FOLDER"
 	git clone --bare git@github.com:vt520/kiosk-helpers.git .git
 	git init
 }
