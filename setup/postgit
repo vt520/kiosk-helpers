@@ -1,5 +1,5 @@
 #!/bin/bash
-echo $EXEC_USER
+echo $EXEC_USER_ID
 echo "Configuring permissions"
 chmod +x setup/permissions
 setup/permissions
