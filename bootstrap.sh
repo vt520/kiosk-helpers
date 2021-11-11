@@ -72,6 +72,6 @@ git pull
 cd ~
 
 sudo -- chown -R root:root /setup/kiosk-helpers
-sudo -- chmod +x /setup/kiosk-helpers/setup
+sudo -- chmod +x /setup/kiosk-helpers/setup/install
 echo $FOLDER
 cd "$FOLDER"
