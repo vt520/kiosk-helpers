@@ -1,7 +1,7 @@
 #!/bin/bash
 echo $EXEC_USER_ID
 echo "Configuring permissions"
-
+echo "Hope to see this first time"
 cd "$SETUP_LOCATION"
 cd ..
 
