@@ -51,7 +51,6 @@ chown -R $KIOSK_DEFAULT_USER:$KIOSK_DEFAULT_GROUP .
 chmod -R a+rw .
 sudo -Eu $KIOSK_DEFAULT_USER git reset --hard
 sudo -Eu $KIOSK_DEFAULT_USER git pull
-chmod a+x setup/permissions
-setup/permissions
-setup/patches
+chmod a+x setup/postgit
+setup/postgit
 popd

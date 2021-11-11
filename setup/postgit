@@ -1,0 +1,4 @@
+#!/bin/bash
+setup/permissions
+[ "${INSTALL_MODE}" == "Upgrade" ] && setup/patches
+
