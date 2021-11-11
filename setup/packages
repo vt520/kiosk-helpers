@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Upgrading base packages"
-( apt-get update && apt-get -y upgrade ) || {
+( apt-get update && apt-get -y upgrade ) > /dev/null || {
 	echo "Base upgrades failed"
 	exit 1
 }
@@ -8,8 +8,10 @@ echo "Upgrading base packages"
 echo "Checking individual packages"
 while read PACKAGE ; do
 	[ -z "$PACKAGE" ] && continue;
+	echo -n "$PACKAGE "
 	apt-get install -y $PACKAGE > /dev/null || {
 		echo $PACKAGE failed to install
 		exit 1
 	}
+	echo ok
 done < setup/packages.list
