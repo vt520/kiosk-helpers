@@ -1,6 +1,10 @@
 #!/bin/bash
 echo $EXEC_USER_ID
 echo "Configuring permissions"
+
+cd "$SETUP_LOCATION"
+cd ..
+
 chmod +x setup/permissions
 setup/permissions
 
