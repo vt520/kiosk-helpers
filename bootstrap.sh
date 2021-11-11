@@ -1,5 +1,5 @@
 #!/bin/bash
-FOLDER="$(pwd)"
+FOLDER=$(pwd)
 BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
 
 [ -e "$BOOTSTRAP_FILE" ] || {
@@ -69,7 +69,9 @@ sudo -- chown -R $USER_ID /setup/kiosk-helpers
 
 git reset --hard
 git pull
-cd .
+cd ~
 
 sudo -- chown -R root:root /setup/kiosk-helpers
 sudo -- chmod +x /setup/kiosk-helpers/setup
+echo $FOLDER
+cd "$FOLDER"
