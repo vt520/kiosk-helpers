@@ -11,6 +11,9 @@ for FILE in $(find -type f); do
 		[ $DIFF -ne 1 ] && {
 			rm $PATCH
 		}
+		[ $DIFF -eq 1 ] && {
+			echo Set aside patch for /$FILE at $(pwd)/$PATCH
+		}
 		rm "$FILE"
 	}
 done
