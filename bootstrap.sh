@@ -11,7 +11,8 @@ BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
 }
 
 
-read -p "Bootstrap Password > " -e PASSWORD
+read -sp "Bootstrap Password > " -e PASSWORD
+echo
 
 function decrypt_file () {
 	openssl enc -d \
@@ -20,10 +21,10 @@ function decrypt_file () {
 	-iter 100000 \
 	-aes256 \
 	-pass stdin \
-	-in "$1" <<<"$PASSWORD"
+	-in "$1" <<<"$PASSWORD" 2> /dev/null
 }
 
-decrypt_file "$BOOTSTRAP_FILE" | tar tj > /dev/null  || {
+decrypt_file "$BOOTSTRAP_FILE" | tar tj &> /dev/null  || {
 	echo "Incorrect password"
 	exit
 }
@@ -36,7 +37,7 @@ The repository will be moved to /setup and have proper permissions applied
 type "YES OKAY" without quotes to proceed; anything else to exit
 EOF
 read -p "Proceed? > " -e PROCEED
-[ "$PROCEED" != "OKAY YES" ] || exit
+[ "$PROCEED" != "YES OKAY" ] || exit
 
 cd ~
 [ -e .ssh ] || mkdir .ssh
@@ -50,13 +51,14 @@ decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 
 # this part needs to run as sudo
 [ -e "${FOLDER}/.git/" ] && {
-	echo git
 	[ "$FOLDER" != "/setup/kiosk-helpers" ] && {
 		echo "Relocating folder to /setup"
 		sudo mkdir -p /setup
 		sudo rm -rf /setup/kiosk-helpers
 		sudo mv "$FOLDER" /setup
 	}
+	FOLDER="/setup/kiosk-helpers"
+	cd "$FOLDER"
 }
 [ -e /setup/kiosk-helpers ] && cd /setup/kiosk-helpers
 
@@ -67,6 +69,7 @@ sudo -- chown -R $USER_ID /setup/kiosk-helpers
 
 git reset --hard
 git pull
+cd .
 
 sudo -- chown -R root:root /setup/kiosk-helpers
 sudo -- chmod +x /setup/kiosk-helpers/setup
