@@ -1,12 +1,7 @@
 #!/bin/bash
 
 . /etc/profile
-
-EXEC_USER_ID=$(id -u)
-[ $EXEC_USER_ID -ne 0 ] && {
-        PERM_USER_ID=$EXEC_USER_ID sudo -Eu root $0 $@
-        exit $?
-}
+. setup/promote
 
 PERM_USER="$(id -nu 1000)"
 PERM_GROUP="$(id -ng 1000)"

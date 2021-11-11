@@ -1,0 +1,69 @@
+#!/bin/bash
+FOLDER="$(pwd)"
+BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
+
+[ -e "$BOOTSTRAP_FILE" ] || {
+	cat <<- EOF
+		Somethings really broken, you're missing bootstrap.tbz
+		Please contact your support provider
+	EOF
+	exit
+}
+
+
+read -p "Bootstrap Password > " -e PASSWORD
+
+function decrypt_file () {
+	openssl enc -d \
+	-md sha512 \
+	-pbkdf2 \
+	-iter 100000 \
+	-aes256 \
+	-pass stdin \
+	-in "$1" <<<"$PASSWORD"
+}
+
+decrypt_file "$BOOTSTRAP_FILE" | tar tj > /dev/null  || {
+	echo "Incorrect password"
+	exit
+}
+
+cat <<- EOF
+This is going to change your SSH User keys and the location of this repo.
+The keys are pre-registered with the remote server for immediate access.
+The repository will be moved to /setup and have proper permissions applied
+
+type "YES OKAY" without quotes to proceed; anything else to exit
+EOF
+read -p "Proceed? > " -e PROCEED
+[ "$PROCEED" != "OKAY YES" ] || exit
+
+cd ~
+[ -e .ssh ] || mkdir .ssh
+chmod u+rwx,go-rwx .ssh
+cd .ssh
+decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
+	mv -f "sdios_bootstrap" "id_rsa"
+	mv -f "sdios_bootstrap.pub" "id_rsa.pub"
+	chmod u+rw,ugo-x,og-rw *
+}
+
+# this part needs to run as sudo
+[ -e "${FOLDER}.git" ] && [ "$FOLDER" != "/setup/kiosk-helpers" ] && {
+	echo "Relocating folder to /setup"
+	FOLDER="$FOLDER" sudo -e -- bash -cs -- <<- SCRIPT
+		echo mkdir -p /setup
+		echo rm -rf /setup/kiosk-helpers
+		echo mv "$FOLDER" /setup
+	SCRIPT
+}
+[ -e /setup/kiosk-helpers ] cd /setup/kiosk-helpers
+
+echo "Updating to current"
+USER_ID=$(id -nu) sudo -e -- bash -cs -- <<- SCRIPT
+	echo chown -R $USER_ID /setup/kiosk-helpers
+	echo sudo -Eu "$USER_ID" -- git reset --hard
+	echo sudo -Eu "$USER_ID" -- git pull
+	echo chown -R root:root /setup/kiosk-helpers
+	echo chmod +x /setup/kiosk-helpers/setup
+SCRIPT
