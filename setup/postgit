@@ -1,5 +1,10 @@
-echo "In POSTGIT"
+#!/bin/bash
+echo $EXEC_USER
+echo "Configuring permissions"
 chmod +x setup/permissions
 setup/permissions
+
+# Determine install mode
+
 [ "${INSTALL_MODE}" == "Upgrade" ] && setup/patches
 
