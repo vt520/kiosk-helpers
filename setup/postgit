@@ -1,3 +1,4 @@
+echo "In POSTGIT"
 chmod +x setup/permissions
 setup/permissions
 [ "${INSTALL_MODE}" == "Upgrade" ] && setup/patches

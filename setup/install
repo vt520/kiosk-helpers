@@ -33,24 +33,25 @@ cat <<- EOF
 SD/IO Installation program; detected $INSTALL_MODE installation
 EOF
 
-pushd .
-until [ -e $(pwd)/.git ]; do
-	cd ..
-	[ "$(pwd)" == "/" ] && {
-		cat <<- EOF
-			Could not gind the GIT repository while searching up the directory tree
-			please try again from the setup or kiosk-helpers directory.
-		EOF
-		exit 1
-	}
-done
-SETUP_LOCATION=$(pwd)
-popd
-pushd $SETUP_LOCATION
-chown -R $KIOSK_DEFAULT_USER:$KIOSK_DEFAULT_GROUP .
-chmod -R a+rw .
-sudo -Eu $KIOSK_DEFAULT_USER git reset --hard
-sudo -Eu $KIOSK_DEFAULT_USER git pull
-chmod a+x setup/postgit
-. setup/postgit
-popd
+pushd . > /dev/null
+	until [ -e $(pwd)/.git ]; do
+		cd ..
+		[ "$(pwd)" == "/" ] && {
+			cat <<- EOF
+				Could not gind the GIT repository while searching up the directory tree
+				please try again from the setup or kiosk-helpers directory.
+			EOF
+			exit 1
+		}
+	done
+	SETUP_LOCATION=$(pwd)
+popd > /dev/null
+
+pushd $SETUP_LOCATION > /dev/null
+	chown -R $KIOSK_DEFAULT_USER:$KIOSK_DEFAULT_GROUP .
+	chmod -R a+rw .
+	sudo -Eu $KIOSK_DEFAULT_USER git reset --hard
+	sudo -Eu $KIOSK_DEFAULT_USER git pull
+	chmod a+x setup/postgit
+	source setup/postgit
+popd > /dev/null
