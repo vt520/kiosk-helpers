@@ -5,7 +5,7 @@ echo "Upgrading base packages"
 	exit 1
 }
 
-echo "Checking individual packages"
+echo "Checking individual packages ( $( wc -l < setup/packages.list ) packages total )"
 while read PACKAGE ; do
 	[ -z "$PACKAGE" ] && continue;
 	echo -n "$PACKAGE "
