@@ -60,7 +60,7 @@ decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 	echo "Relocating folder to /setup"
 	sudo mkdir -p /setup
 	sudo rm -rf /setup/kiosk-helpers
-	sudo mv "$FOLDER" /setup
+	sudo mv "$FOLDER" /setup/kiosk-helpers
 	FOLDER="/setup/kiosk-helpers"
 	cd "$FOLDER"
 }
