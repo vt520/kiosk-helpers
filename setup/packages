@@ -11,7 +11,7 @@ while read PACKAGE ; do
 	echo -n "$PACKAGE "
 	(
 		( echo -n " downloading... ";	apt-get install -qdy $PACKAGE ) \
-		|| ( echo -n "installing... "; apt-get install -qy $PACLAGE )
+		|| ( echo -n "installing... "; apt-get install -qy $PACKAGE )
 	) || {
 		echo $PACKAGE failed to install
 		exit 1
