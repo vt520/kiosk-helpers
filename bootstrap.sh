@@ -49,21 +49,24 @@ decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 }
 
 # this part needs to run as sudo
-[ -e "${FOLDER}.git" ] && [ "$FOLDER" != "/setup/kiosk-helpers" ] && {
-	echo "Relocating folder to /setup"
-	FOLDER="$FOLDER" sudo -e -- bash -cs -- <<- SCRIPT
-		echo mkdir -p /setup
-		echo rm -rf /setup/kiosk-helpers
-		echo mv "$FOLDER" /setup
-	SCRIPT
+[ -e "${FOLDER}/.git/" ] && {
+	echo git
+	[ "$FOLDER" != "/setup/kiosk-helpers" ] && {
+		echo "Relocating folder to /setup"
+		sudo mkdir -p /setup
+		sudo rm -rf /setup/kiosk-helpers
+		sudo mv "$FOLDER" /setup
+	}
 }
 [ -e /setup/kiosk-helpers ] && cd /setup/kiosk-helpers
 
 echo "Updating to current"
-USER_ID=$(id -nu) sudo -e -- bash -cs -- <<- SCRIPT
-	echo chown -R $USER_ID /setup/kiosk-helpers
-	echo sudo -Eu "$USER_ID" -- git reset --hard
-	echo sudo -Eu "$USER_ID" -- git pull
-	echo chown -R root:root /setup/kiosk-helpers
-	echo chmod +x /setup/kiosk-helpers/setup
-SCRIPT
+USER_ID="$(id -nu):$(id -ng)"
+
+sudo -- chown -R $USER_ID /setup/kiosk-helpers
+
+echo git reset --hard
+echo git pull
+
+sudo -- chown -R root:root /setup/kiosk-helpers
+sudo -- chmod +x /setup/kiosk-helpers/setup
