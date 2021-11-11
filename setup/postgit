@@ -19,5 +19,20 @@ SETUP_CONFIG="/etc/kiosk/setup"
 }
 
 echo "Creating System Tarball"
-SYSTEM_TARBALL=$(tempfile)
-tar cjpPf "$SYSTEM_TARBALL" *
+
+TEMP_TARBALL=$(tempfile)
+SYSTEM_TARBALL=/etc/kiosk.last-system-image.tbz
+
+[ -e "$SYSTEM_TARBALL" ] mv "$SYSTEM_TARBALL" "${SYSTEM_TARBALL}.old"
+tar cjpPf "$TEMP_TARBALL" -- *
+mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
+
+cat <<- EOF
+Preparing to apply image;
+type "YES PLEASE" at the prompt to install;
+anything else for a rather ungraceful exit
+
+read -p "INSTALL> " -ie PROMPT
+[ "$PROMPT" == "YES PLEASE" ] && {
+	echo okay good
+}
