@@ -1,13 +1,17 @@
 #!/bin/bash
-
+[ -e patches/ ] && {
+	echo Removing old patches
+	rm -rf patches/
+}
 for FILE in $(find -type f); do
 	FILE="${FILE#./}"
 	[ -e "/$FILE" ] && {
-		PATCH="patches/$FILE"
+		PATCH="patches/$FILE.patch"
 		mkdir -p $(dirname $PATCH) 2> /dev/null
 		diff -a "/$FILE" "$FILE" > $PATCH
 		DIFF=$?
 		[ $DIFF -ne 1 ] && {
+			echo removing $PATCH
 			rm $PATCH
 		}
 		[ $DIFF -eq 1 ] && {
