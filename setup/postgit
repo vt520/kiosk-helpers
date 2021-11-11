@@ -23,7 +23,7 @@ echo "Creating System Tarball"
 TEMP_TARBALL=$(tempfile)
 SYSTEM_TARBALL=/etc/kiosk.last-system-image.tbz
 
-[ -e "$SYSTEM_TARBALL" ] mv "$SYSTEM_TARBALL" "${SYSTEM_TARBALL}.old"
+[ -e "$SYSTEM_TARBALL" ] && mv "$SYSTEM_TARBALL" "${SYSTEM_TARBALL}.old"
 tar cjpPf "$TEMP_TARBALL" -- *
 mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
 
