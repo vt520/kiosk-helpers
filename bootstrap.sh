@@ -49,6 +49,7 @@ decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 	chmod u+rw,ugo-x,og-rw *
 }
 
+echo "$FOLDER/.git/"
 [ -e "${FOLDER}/.git/" ] && {
 	echo "Creating repository information"
 	cd "$FOLDER"
