@@ -52,5 +52,5 @@ chmod -R a+rw .
 sudo -Eu $KIOSK_DEFAULT_USER git reset --hard
 sudo -Eu $KIOSK_DEFAULT_USER git pull
 chmod a+x setup/postgit
-setup/postgit
+. setup/postgit
 popd
