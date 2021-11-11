@@ -49,17 +49,22 @@ decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 	chmod u+rw,ugo-x,og-rw *
 }
 
-# this part needs to run as sudo
 [ -e "${FOLDER}/.git/" ] && {
-	[ "$FOLDER" != "/setup/kiosk-helpers" ] && {
-		echo "Relocating folder to /setup"
-		sudo mkdir -p /setup
-		sudo rm -rf /setup/kiosk-helpers
-		sudo mv "$FOLDER" /setup
-	}
+	echo "Creating repository information"
+	git clone --bare git@github.com:vt520/kiosk-helpers.git .git
+	git init
+}
+
+# this part needs to run as sudo
+[ "$FOLDER" != "/setup/kiosk-helpers" ] && {
+	echo "Relocating folder to /setup"
+	sudo mkdir -p /setup
+	sudo rm -rf /setup/kiosk-helpers
+	sudo mv "$FOLDER" /setup
 	FOLDER="/setup/kiosk-helpers"
 	cd "$FOLDER"
 }
+
 [ -e /setup/kiosk-helpers ] && cd /setup/kiosk-helpers
 
 echo "Updating to current"
