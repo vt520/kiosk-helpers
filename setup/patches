@@ -5,9 +5,7 @@ for FILE in $(find -type f); do
 	[ -e "/$FILE" ] && {
 		echo Found $FILE
 		mkdir -p patches/$(dirname $FILE) 2> /dev/null
-		diff "/$FILE" "$FILE" > "patches/${FILE}.patch" && {
-			echo Patch created
-		} || {
+		diff "/$FILE" "$FILE" > "patches/${FILE}.patch" || {
 			rm "patches/${FILE}.patch"
 		}
 		rm "$FILE"
