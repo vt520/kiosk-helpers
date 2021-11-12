@@ -12,8 +12,14 @@ BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
 			Could not install wget; exiting
 		EOF
 	}
-	unzip main.zip > /dev/null
-	[ -e kiosk-helpers-main ] && cd kiosk-helpers-main
+	unzip -o main.zip > /dev/null && rm main.zip
+	[ -e kiosk-helpers-main/bootstrap.sh ] || {
+		cat <<- EOF
+			So, extraction failed, or the get failed, but this is bad,
+			try again.
+		EOF
+	}
+	cd kiosk-helpers-main
 	source bootstrap.sh
 	exit
 }
