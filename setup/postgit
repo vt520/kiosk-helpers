@@ -21,6 +21,9 @@ SETUP_CONFIG="/etc/kiosk/setup"
 	setup/patches
 }
 
+echo "Configuring SD/OS Build"
+setup/prompts
+
 echo "Creating System Tarball"
 
 TEMP_TARBALL=$(tempfile)

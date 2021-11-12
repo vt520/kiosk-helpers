@@ -1,0 +1,18 @@
+#!/bin/bash
+[ -e /etc/kiosk/setup ] && source /etc/kiosk/setup
+
+exec 3< setup/prompts.list
+
+while read -u 3 VARIABLE DEFAULT PROMPT; do
+	echo "$PROMPT"
+	read -p "$VARIABLE > " -i "${!VARIABLE:-$DEFAULT}" -e $VARIABLE
+	echo $VARIABLE=${!VARIABLE}
+done
+
+TEMPFILE=$(tempfile)
+compgen -v | grep "^SETUP_" \
+| while read SETUP_VAR; do
+	echo $SETUP_VAR="${!SETUP_VAR}" >> $TEMPFILE
+done
+
+cp $TEMPFILE etc/kiosk/setup

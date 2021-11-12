@@ -1,0 +1,3 @@
+SETUP_KIOSK_ID 		10 				The ID number of the kiosk, must be unique
+SETUP_KIOSK_SERVER	kiosks.energyservices.org	The DNS name of the SD/OS Reflector Server
+SETUP_KIOSK_PORT	22				The port the SD/OS Server is Listening on
