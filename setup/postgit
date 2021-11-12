@@ -8,6 +8,9 @@ cd ..
 chmod +x setup/permissions
 setup/permissions
 
+echo "Configuring SD/OS Build"
+setup/prompts
+
 echo "Checking installed packages"
 setup/packages
 
@@ -21,8 +24,6 @@ SETUP_CONFIG="/etc/kiosk/setup"
 	setup/patches
 }
 
-echo "Configuring SD/OS Build"
-setup/prompts
 
 echo "Creating System Tarball"
 
