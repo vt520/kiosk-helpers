@@ -93,5 +93,11 @@ cd ~
 
 sudo -- chown -R root:root /setup/kiosk-helpers
 sudo -- chmod +x /setup/kiosk-helpers/setup/install
-echo $FOLDER
+cat <<- EOF
+	Bootstrapping finished; starting installer in 30 seconds
+	hit CTRL+C to abort
+	$FOLDER
+EOF
+sleep 30 || echo "use 'cd .' to reload your directory"
 cd "$FOLDER"
+setut/install

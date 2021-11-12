@@ -37,6 +37,7 @@ anything else for a rather ungraceful exit
 EOF
 
 read -p "INSTALL> " -ie PROMPT
+
 [ "$PROMPT" == "YES PLEASE" ] && {
 	cd /
 	tar xjpPf $SYSTEM_TARBALL
