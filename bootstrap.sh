@@ -5,7 +5,7 @@ BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
 [ -e "$BOOTSTRAP_FILE" ] || {
 	echo "Trying to download current packages"
 	which wget || sudo apt-get install -qqy wget
-	wget -qO "main.zip" "https://github.com/vt520/kiosk-helpers/archive/refs/heads/main.zip" || {
+	wget -q -O "main.zip" "https://github.com/vt520/kiosk-helpers/archive/refs/heads/main.zip" || {
 		cat <<- EOF
 			Somethings really broken, you're missing bootstrap.tbz
 			Please contact your support provider
