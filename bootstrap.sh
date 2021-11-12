@@ -100,4 +100,4 @@ cat <<- EOF
 EOF
 sleep 30 || echo "use 'cd .' to reload your directory"
 cd "$FOLDER"
-setut/install
+setup/install
