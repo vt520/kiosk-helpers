@@ -1,7 +1,10 @@
 #!/bin/bash
 FOLDER=$(pwd)
 BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
-
+which unzip > /dev/null || {
+	echo "Installing unzip"
+	sudo apt install unzip -qqy
+}
 [ -e "$BOOTSTRAP_FILE" ] || {
 	echo "Trying to download current packages"
 	which wget || sudo apt-get install -qqy wget
@@ -41,6 +44,8 @@ decrypt_file "$BOOTSTRAP_FILE" | tar tj &> /dev/null  || {
 	echo "Incorrect password"
 	exit
 }
+
+SETUP_HASHWORD=$(sha256sum <<<$PASSWORD | sed -r 's/ .*//')
 
 cat <<- EOF
 This is going to change your SSH User keys and the location of this repo.
