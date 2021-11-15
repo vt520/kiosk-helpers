@@ -91,7 +91,7 @@ echo "Updating to current"
 USER_ID="$(id -nu):$(id -ng)"
 
 sudo -- chown -R $USER_ID /setup/kiosk-helpers
-sudo -- chmod  -R u+rw /setup/kiosk-helpers/etc
+sudo -- chmod  u+rwx $(find /setup/kiosk-helpers/* -type d)
 
 git reset --hard
 git pull
