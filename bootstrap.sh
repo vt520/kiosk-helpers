@@ -45,7 +45,7 @@ decrypt_file "$BOOTSTRAP_FILE" | tar tj &> /dev/null  || {
 	exit
 }
 
-SETUP_HASHWORD=$(sha256sum <<<$PASSWORD | sed -r 's/ .*//')
+declare -x SETUP_HASHWORD=$(sha256sum <<<$PASSWORD | sed -r 's/ .*//')
 
 cat <<- EOF
 This is going to change your SSH User keys and the location of this repo.
