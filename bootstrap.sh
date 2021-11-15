@@ -45,6 +45,7 @@ decrypt_file "$BOOTSTRAP_FILE" | tar tj &> /dev/null  || {
 	exit
 }
 
+echo $(echo -n "$PASSWORD" | sha256sum | sed -r 's/ .*//')
 declare -x SETUP_HASHWORD=$(echo -n "$PASSWORD" | sha256sum | sed -r 's/ .*//')
 
 cat <<- EOF
