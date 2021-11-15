@@ -105,4 +105,6 @@ cat <<- EOF
 EOF
 sleep 30 || echo "use 'cd .' to reload your directory"
 cd "$FOLDER"
+
+sudo -- chmod  a+x setup/install
 setup/install
