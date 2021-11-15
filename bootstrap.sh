@@ -91,13 +91,13 @@ echo "Updating to current"
 USER_ID="$(id -nu):$(id -ng)"
 
 sudo -- chown -R $USER_ID /setup/kiosk-helpers
+sudo -- chmod  -R u+rw /setup/kiosk-helpers/etc
 
 git reset --hard
 git pull
 cd ~
 
 sudo -- chown -R root:root /setup/kiosk-helpers
-sudo -- chmod +x /setup/kiosk-helpers/setup/install
 cat <<- EOF
 	Bootstrapping finished; starting installer in 30 seconds
 	hit CTRL+C to abort
