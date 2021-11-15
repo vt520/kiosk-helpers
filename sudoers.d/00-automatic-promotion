@@ -1,0 +1,2 @@
+%sudo ALL = (root) NOPASSWD: /usr/local/sbin/
+%www-data ALL = (root) NOPASSWD: /usr/local/sbin/

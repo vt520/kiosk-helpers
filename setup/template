@@ -1,0 +1,3 @@
+for TEMPLATE in $(find setup/templates -type f); do
+	echo ${TEMPLATE} ${TEMPLATE##setup/templates/}
+done
