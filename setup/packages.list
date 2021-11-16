@@ -641,6 +641,8 @@ pptp-linux
 network-manager-pptp
 pavucontrol
 plymouth-label
+plymouth-themes
+plymouth
 rtkit
 update-inetd
 sane-utils
