@@ -1,22 +1,21 @@
 #!/bin/bash
 [ -e patches/ ] && {
-	echo Removing old patches
-	rm -rf patches/
+	echo "Generating install differences"
+	rm -rf changes/
 }
 for FILE in $(find -type f); do
 	FILE="${FILE#./}"
 	[ -e "/$FILE" ] && {
-		PATCH="patches/$FILE.patch"
+		PATCH="changes/$(date '+%Y-%m-%d')/$FILE.patch"
 		mkdir -p $(dirname $PATCH) 2> /dev/null
-		diff -a "/$FILE" "$FILE" > $PATCH
+		diff -a "$FILE" "/$FILE" > $PATCH
 		DIFF=$?
 		[ $DIFF -ne 1 ] && {
-			echo removing $PATCH
-			rm $PATCH
+			rm $PATCH > /dev/null
 		}
 		[ $DIFF -eq 1 ] && {
-			echo Set aside patch for /$FILE at $(pwd)/$PATCH
+			echo "Rollback Patch for /$FILE at $(pwd)/$PATCH"
 		}
-		rm "$FILE"
+		# rm "$FILE"
 	}
 done

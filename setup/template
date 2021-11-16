@@ -1,3 +1,5 @@
+#!/bin/bash
+source etc/kiosk/setup
 for TEMPLATE in $(find setup/templates -type f); do
-	echo ${TEMPLATE} ${TEMPLATE##setup/templates/}
+	echo "${TEMPLATE} > ${TEMPLATE##setup/templates/}"
 done
