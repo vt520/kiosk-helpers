@@ -26,9 +26,8 @@ cat <<- EOF
 
 Preparing to apply image;
 press enter to finish installing;
-anything else for a rather ungraceful exit
+CTRL+C for a rather ungraceful exit
 EOF
-
 read
 
 cd /
