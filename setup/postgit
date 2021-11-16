@@ -11,12 +11,12 @@ setup/permissions
 echo "Configuring SD/OS Build"
 setup/prompts
 
+echo "Applying Settings Templates"
+setup/template
+
 echo "Checking installed packages"
 # setup/image
 setup/packages
-
-echo "Applying Settings Templates"
-setup/template
 
 echo "Creating uninstall patches"
 setup/patches
