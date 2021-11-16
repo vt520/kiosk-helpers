@@ -14,10 +14,11 @@ SYSTEM_TARBALL="${SYSTEM_TARBALL_FOLDER}/last-system-image.tbz"
 echo "Removing empty folders"
 rm -rf $(find -empty)
 
-tar cvjpPf "$TEMP_TARBALL" -- \
-	--remove-files \
-	$(find [a-zA-Z0-9]* -not -path  "setup*" -and -not -iname "bootstrap*")
+cd . #refresh directory
 
+tar cvjpf "$TEMP_TARBALL" -- \
+	--remove-files \
+	$(find  -maxdepth 1 -type d -not -path  "./setup" -and -not -iname ".*") LICENSE
 
 mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
 
@@ -31,5 +32,5 @@ EOF
 read
 
 cd /
-tar xvjpPf $SYSTEM_TARBALL
+tar xvjpf $SYSTEM_TARBALL
 read
