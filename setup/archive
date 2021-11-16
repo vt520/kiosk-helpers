@@ -1,0 +1,31 @@
+#!/bin/bash
+
+TEMP_TARBALL=$(tempfile)
+SYSTEM_TARBALL_FOLDER="/etc/kiosk"
+
+SYSTEM_TARBALL="${SYSTEM_TARBALL_FOLDER}/last-system-image.tbz"
+
+[ -e "$SYSTEM_TARBALL" ] && {
+	SYSTEM_BACKUP="${SYSTEM_TARBALL_FOLDER}/system-image-$(date '+%Y-%m-%d').tbz"
+	echo Saving old system to $SYSTEM_BACKUP
+	mv "$SYSTEM_TARBALL" "${SYSTEM_BACKUP}"
+}
+
+tar cvjpPf "$TEMP_TARBALL" -- \
+	$(find [a-zA-Z0-9]* -not -path  "setup*" -and -not -iname "bootstrap*")
+
+
+mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
+
+cat <<- EOF
+
+Preparing to apply image;
+press enter to finish installing;
+anything else for a rather ungraceful exit
+EOF
+
+read
+
+cd /
+tar xvjpPf $SYSTEM_TARBALL
+read
