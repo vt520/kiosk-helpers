@@ -4,9 +4,11 @@ update-initramfs -u
 update-grub
 systemctl daemon-reload
 systemctl enable management.service
-systemctl display-manager.service management.service
+systemctl enable display-manager.service
+hostnamectl --static hostname "${SETUP_USER}-${SETUP_KIOSK_ID}"
 sudo -u "${SETUP_USER}" systemctl --user daemon-reload
 sudo -u "${SETUP_USER}" systemctl --user enable remote.service
+
 echo "Press any key to restart"
 read
 reboot
