@@ -1,6 +1,7 @@
 #!/bin/bash
 source etc/kiosk/setup
 for TEMPLATE in $(find setup/templates -type f); do
+	echo "Applying template: $TEMPLATE"
 	chmod a+x "${TEMPLATE}"
 	. "${TEMPLATE}" > ${TEMPLATE##setup/templates/}
 	read
