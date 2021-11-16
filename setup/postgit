@@ -45,6 +45,7 @@ read -p "INSTALL> " -ie PROMPT
 [ "$PROMPT" == "YES PLEASE" ] && {
 	cd /
 	tar xvjpPf $SYSTEM_TARBALL
+	read
 	echo
 	echo "Installing / Updating Base Image"
 	setup/image

@@ -1,6 +1,6 @@
 #!/bin/bash
 source /etc/setup/kiosk
-update-initramfs
+update-initramfs -u
 update-grub
 systemctl daemon-reload
 systemctl enable management.service
