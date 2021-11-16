@@ -3,6 +3,7 @@
 
 [ -e /etc/kiosk/setup ] && source /etc/kiosk/setup
 
+
 exec 3< setup/prompts.list
 
 while read -u 3 VARIABLE DEFAULT PROMPT; do
