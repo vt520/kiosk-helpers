@@ -52,4 +52,4 @@ read -p "INSTALL> " -ie PROMPT
 
 echo
 echo "Running post-install"
-setup/post-install
+setup/postinstall
