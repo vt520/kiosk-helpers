@@ -12,6 +12,7 @@ echo "Configuring SD/OS Build"
 setup/prompts
 
 echo "Checking installed packages"
+setup/image
 setup/packages
 
 echo "Determining install mode"
