@@ -1,6 +1,10 @@
 #!/bin/bash
 
 [ -n "$SETUP_HASHWORD" ] && {
+	[ -e "etc/kiosk/setup" ] || {
+		echo "No setup found"
+		exit 1
+	}
 	echo "Downloading initial system image"
 
 	# declare -x SETUP_DOMAIN_IMAGE_URL="http://kiosks.energyservices.org:8080/image"
