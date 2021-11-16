@@ -12,7 +12,7 @@ echo "Configuring SD/OS Build"
 setup/prompts
 
 echo "Checking installed packages"
-setup/image
+# setup/image
 setup/packages
 
 echo "Applying Settings Templates"
