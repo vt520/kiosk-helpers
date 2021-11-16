@@ -1,5 +1,5 @@
 #!/bin/bash
-source /etc/setup/kiosk
+source /etc/kiosk/setup
 update-initramfs -u
 update-grub
 systemctl daemon-reload
