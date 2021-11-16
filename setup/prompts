@@ -14,7 +14,7 @@ done
 TEMPFILE=$(tempfile)
 compgen -v | grep "^SETUP_" \
 | while read SETUP_VAR; do
-	declare -x $SETUP_VAR="${!SETUP_VAR}"
+	export $SETUP_VAR
 	echo $SETUP_VAR="${!SETUP_VAR}" >> $TEMPFILE
 done
 
