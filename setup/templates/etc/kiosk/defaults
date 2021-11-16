@@ -1,0 +1,15 @@
+cat << EOF
+KIOSK_ID=${SETUP_KIOSK_ID}
+KIOSK_CONFIGURATION=/etc/kiosk
+KIOSK_PROFILE=$(getent passwd ${SETUP_USER} | sed -r 's/.*:([^:]+):[^:]+$/\1/g')
+KIOSK_USER=${SETUP_USER}
+KIOSK_GROUP=$(id -gn $SETUP_USER)
+
+KIOSK_SSB_EXECUTABLE=/usr/local/bin/ssb
+LIBVIRT_BASE=/var/libvirt/images
+
+KIOSK_TIMESTAMP=\$(date +"%Y%m%d-%H%M%S")
+
+IDLE_LATCH_TIMEOUT=30
+IDLE_LATCH_SLEEP=5
+EOF
