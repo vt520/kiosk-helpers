@@ -10,9 +10,9 @@ which unzip > /dev/null || {
 	which wget || sudo apt-get install -qqy wget
 	wget -q -O "main.zip" "https://github.com/vt520/kiosk-helpers/archive/refs/heads/main.zip" || {
 		cat <<- EOF
-			Somethings really broken, you're missing bootstrap.tbz
-			Please contact your support provider
-			Could not install wget; exiting
+			Somethings really broken, you're missing some important files.
+
+			Could not download archive; exiting
 		EOF
 	}
 	unzip -o main.zip > /dev/null && rm main.zip
@@ -72,8 +72,8 @@ echo "$FOLDER/.git/"
 [ -e "${FOLDER}/.git/" ] || {
 	echo "Creating repository information"
 	cd "$FOLDER"
-	git clone --bare git@github.com:vt520/kiosk-helpers.git .git
-	git init
+	git clone --bare git@github.com:vt520/kiosk-helpers.git .git > /dev/null
+	git init > /dev/null
 }
 
 # this part needs to run as sudo
@@ -94,8 +94,8 @@ USER_ID="$(id -nu):$(id -ng)"
 sudo -- chown -R $USER_ID /setup/kiosk-helpers
 sudo -- chmod  u+rwx $(find /setup/kiosk-helpers/* -type d)
 
-git reset --hard
-git pull
+git reset --hard > /dev/null
+git pull | grep " is now at "
 cd ~
 
 sudo -- chown -R root:root /setup/kiosk-helpers
