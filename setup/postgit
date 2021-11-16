@@ -35,21 +35,20 @@ tar cjpPf "$TEMP_TARBALL" -- *
 mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
 
 cat <<- EOF
+
 Preparing to apply image;
-type "YES PLEASE" at the prompt to install;
+press enter to finish installing;
 anything else for a rather ungraceful exit
 EOF
 
-read -p "INSTALL> " -ie PROMPT
+read
 
-[ "$PROMPT" == "YES PLEASE" ] && {
-	cd /
-	tar xvjpPf $SYSTEM_TARBALL
-	read
-	echo
-	echo "Installing / Updating Base Image"
-	setup/image
-}
+cd /
+tar xvjpPf $SYSTEM_TARBALL
+read
+echo
+echo "Installing / Updating Base Image"
+setup/image
 
 echo
 echo "Running post-install"
