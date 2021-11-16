@@ -9,3 +9,4 @@ root:root g+rx,o-rx,go-w,u+rwx usr/local/bin/*
 :runtime: a+rx setup/*
 :runtime: a-x setup/*.list
 root:root 0440 etc/sudoers.d/*
+root:root u+rw,u-x,go-rwx etc/libvirt/qemu/win10.xml
