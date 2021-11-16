@@ -16,8 +16,7 @@ rm -rf $(find -empty)
 
 cd . #refresh directory
 
-tar cvjpf "$TEMP_TARBALL" -- \
-	--remove-files \
+tar cvjpf "$TEMP_TARBALL" --remove-files -- \
 	$(find  -maxdepth 1 -type d -not -path  "./setup" -and -not -iname ".*") LICENSE
 
 mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
