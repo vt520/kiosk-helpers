@@ -11,7 +11,11 @@ SYSTEM_TARBALL="${SYSTEM_TARBALL_FOLDER}/last-system-image.tbz"
 	mv "$SYSTEM_TARBALL" "${SYSTEM_BACKUP}"
 }
 
+echo "Removing empty folders"
+rm -rf $(find -empty)
+
 tar cvjpPf "$TEMP_TARBALL" -- \
+	--remove-files \
 	$(find [a-zA-Z0-9]* -not -path  "setup*" -and -not -iname "bootstrap*")
 
 
