@@ -1,7 +1,7 @@
 #!/bin/bash
 GRUB_EFI_FLAGS="quiet splash usbcore.autosuspend=-1 acpi=off apm=off consoleblank=0"
-dmidecode -s system-manufacturer | grep "Microsoft Corporation" > /dev/null && {
-	GRUB_EFI_FLAGS=""
+[ "$(systemd-detect-virt)" ==  "microsoft"> /dev/null && {
+	GRUB_EFI_FLAGS="quiet splash"
 }
 
 cat << EOF
