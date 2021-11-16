@@ -1,0 +1,12 @@
+#!/bin/bash
+source /etc/setup/kiosk
+update-initramfs
+update-grub
+systemctl daemon-reload
+systemctl enable management.service
+systemctl display-manager.service management.service
+sudo -u "${SETUP_USER}" systemctl --user daemon-reload
+sudo -u "${SETUP_USER}" systemctl --user enable remote.service
+echo "Press any key to restart"
+read
+reboot

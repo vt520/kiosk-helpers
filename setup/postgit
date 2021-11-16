@@ -8,19 +8,23 @@ cd ..
 chmod +x setup/permissions
 setup/permissions
 
+echo
 echo "Configuring SD/OS Build"
 setup/prompts
 
+echo
 echo "Applying Settings Templates"
 setup/template
 
+echo
 echo "Checking installed packages"
-# setup/image
 setup/packages
 
+echo
 echo "Creating uninstall patches"
 setup/patches
 
+echo
 echo "Creating System Tarball"
 
 TEMP_TARBALL=$(tempfile)
@@ -40,5 +44,12 @@ read -p "INSTALL> " -ie PROMPT
 
 [ "$PROMPT" == "YES PLEASE" ] && {
 	cd /
-	tar xjpPf $SYSTEM_TARBALL
+	tar xvjpPf $SYSTEM_TARBALL
+	echo
+	echo "Installing / Updating Base Image"
+	setup/image
 }
+
+echo
+echo "Running post-install"
+setup/post-install
