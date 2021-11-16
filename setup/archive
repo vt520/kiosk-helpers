@@ -31,4 +31,3 @@ read
 
 cd /
 tar xvjpf $SYSTEM_TARBALL
-read
