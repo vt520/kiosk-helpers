@@ -11,6 +11,10 @@ echo "Checking individual packages ($TOTAL) packages total"
 while read PACKAGE ; do
 	COUNT=$(( $COUNT + 1 ))
 	[ -z "$PACKAGE" ] && continue;
+	[ dpkg -l | grep $PACKAGE > /dev/null ] && {
+		echo "Installed"
+		continue
+	}
 	(
 		( apt-get install -qqdy $PACKAGE ) \
 		&& ( DEBIAN_FRONTEND=noninteractive \
