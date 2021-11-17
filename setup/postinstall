@@ -9,8 +9,6 @@ systemctl enable display-manager.service
 sudo -Eu "${SETUP_USER}" systemctl --user daemon-reload
 restorecon /etc/hosts
 restorecon /etc/hostname
-hostnamectl set-hostname $SETUP_HOSTNAME
-hostnamectl --static set-hostname $SETUP_HOSTNAME
 echo "Press enter to restart"
 read
 reboot
