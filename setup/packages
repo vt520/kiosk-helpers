@@ -12,16 +12,17 @@ while read PACKAGE ; do
 	COUNT=$(( $COUNT + 1 ))
 	[ -z "$PACKAGE" ] && continue;
 	( dpkg -l | grep $PACKAGE > /dev/null ) && {
-		echo "Installed"
+		echo -n "."
 		continue
 	}
 	(
-		( apt-get install -qqdy $PACKAGE ) \
+		echo -n "!"
+		( apt-get install -qqdy $PACKAGE > /dev/null ) \
 		&& ( DEBIAN_FRONTEND=noninteractive \
- 		apt-get install -qqy $PACKAGE )
+ 		apt-get install -qqy $PACKAGE  > /dev/null )
 	) || {
 		echo $PACKAGE failed to install
 		exit 1
 	}
-	[ $(( $COUNT % 50 )) -eq 0 ] && echo "$COUNT installed OK, $(( $TOTAL - $COUNT )) packages left"
+	[ $(( $COUNT % 50 )) -eq 0 ] && echo "\n$COUNT verified, $(( $TOTAL - $COUNT )) remain"
 done < setup/packages.list
