@@ -3,10 +3,10 @@
 TEMP_TARBALL=$(tempfile)
 SYSTEM_TARBALL_FOLDER="/etc/kiosk"
 
-SYSTEM_TARBALL="${SYSTEM_TARBALL_FOLDER}/last-system-image.tbz"
+SYSTEM_TARBALL="${SYSTEM_TARBALL_FOLDER}/last-system-setup.tbz"
 
 [ -e "$SYSTEM_TARBALL" ] && {
-	SYSTEM_BACKUP="${SYSTEM_TARBALL_FOLDER}/system-image-$(date '+%Y-%m-%d').tbz"
+	SYSTEM_BACKUP="${SYSTEM_TARBALL_FOLDER}/system-setup-$(date '+%Y-%m-%d').tbz"
 	echo Saving old system to $SYSTEM_BACKUP
 	mv "$SYSTEM_TARBALL" "${SYSTEM_BACKUP}"
 }
@@ -16,7 +16,7 @@ rm -rf $(find -empty)
 
 cd . #refresh directory
 
-tar cvjpf "$TEMP_TARBALL" --remove-files -- \
+tar cjpf "$TEMP_TARBALL" --remove-files -- \
 	$(find  -maxdepth 1 -type d -not -path  "./setup" -and -not -iname ".*") LICENSE
 mkdir -p "$(dirname $SYSTEM_TARBALL)" > /dev/null
 mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
@@ -30,4 +30,4 @@ EOF
 read
 
 cd /
-tar xvjpf $SYSTEM_TARBALL
+tar xjpf $SYSTEM_TARBALL
