@@ -1,6 +1,7 @@
 [Unit]
 Description=SSH Management Tunnel
 After=network.target
+WantedBy=display-manager.service 
 
 [Service]
 Type=simple
