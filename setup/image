@@ -1,11 +1,11 @@
 #!/bin/bash
 
 [ -n "$SETUP_HASHWORD" ] && {
-	[ -e "etc/kiosk/setup" ] || {
+	[ -e "/etc/kiosk/setup" ] || {
 		echo "No setup found"
 		exit 1
 	}
-	. etc/kiosk/setup
+	. /etc/kiosk/setup
 	pushd / > /dev/null
 	echo "Downloading initial system image"
 
