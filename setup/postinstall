@@ -8,7 +8,7 @@ systemctl enable display-manager.service
 sudo -u "${SETUP_USER}" systemctl --user daemon-reload
 sudo -u "${SETUP_USER}" systemctl --user enable remote.service
 
-echo "Press any key to set hostname and restart"
+echo "Press enter to set hostname and restart"
 read
 hostnamectl --static set-hostname "${SETUP_USER}-${SETUP_KIOSK_ID}"
 reboot
