@@ -23,11 +23,10 @@ mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
 
 cat <<- EOF
 
-Preparing to apply image;
-press enter to finish installing;
+Preparing to apply image in 10 seconds
 CTRL+C for a rather ungraceful exit
 EOF
-read
+sleep 10
 
 cd /
 tar xjpf $SYSTEM_TARBALL
