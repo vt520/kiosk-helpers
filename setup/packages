@@ -11,7 +11,7 @@ echo "Checking individual packages ($TOTAL) packages total"
 while read PACKAGE ; do
 	COUNT=$(( $COUNT + 1 ))
 	[ -z "$PACKAGE" ] && continue;
-	if ( dpkg -l | grep $PACKAGE > /dev/null ); then
+	if ( dpkg -l | grep " $PACKAGE " > /dev/null ); then
 		echo -n "."
 	else
 		(
@@ -24,5 +24,5 @@ while read PACKAGE ; do
 			exit 1
 		}
 	fi
-	[ $(( $COUNT % 50 )) -eq 0 ] && echo "\n$COUNT verified, $(( $TOTAL - $COUNT )) remain"
+	[ $(( $COUNT % 50 )) -eq 0 ] && echo " $COUNT verified, $(( $TOTAL - $COUNT )) remain"
 done < setup/packages.list
