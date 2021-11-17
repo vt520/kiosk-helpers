@@ -760,3 +760,13 @@ libfreerdp2-2
 libfreerdp-client2-2
 freerdp2-x11
 xprintidle
+libgd3 
+libjbig0 
+libnginx-mod-http-image-filter 
+libnginx-mod-http-xslt-filter 
+libnginx-mod-mail 
+libnginx-mod-stream
+libtiff5 
+libwebp6 
+nginx-common
+nginx-core php7.4-fpm
