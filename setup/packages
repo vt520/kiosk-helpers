@@ -24,5 +24,11 @@ while read PACKAGE ; do
 			exit 1
 		}
 	fi
-	[ $(( $COUNT % 50 )) -eq 0 ] && echo " $COUNT verified, $(( $TOTAL - $COUNT )) remain"
+	[ $(( $COUNT % 10 )) -eq 0 ] && {
+		if [ $(( $COUNT % 50 )) -eq 0 ]; then
+			echo " $COUNT verified, $(( $TOTAL - $COUNT )) remain"
+		else
+			echo -n ":"
+		fi
+	}
 done < setup/packages.list
