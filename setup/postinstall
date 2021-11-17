@@ -5,7 +5,7 @@ update-grub
 systemctl daemon-reload
 systemctl enable management.service
 systemctl enable display-manager.service
-hostnamectl --static hostname "${SETUP_USER}-${SETUP_KIOSK_ID}"
+hostnamectl --static set-hostname "${SETUP_USER}-${SETUP_KIOSK_ID}"
 sudo -u "${SETUP_USER}" systemctl --user daemon-reload
 sudo -u "${SETUP_USER}" systemctl --user enable remote.service
 
