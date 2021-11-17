@@ -1,0 +1,7 @@
+#!/bin/bash
+. etc/kiosk/setup
+SETUP_HOSTNAME=${SETUP_USER:=kooky}-$(printf "%02i" ${SETUP_KIOSK_ID:=1})
+
+cat << EOF
+$SETUP_HOSTNAME
+EOF
