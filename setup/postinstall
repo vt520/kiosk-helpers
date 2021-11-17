@@ -1,12 +1,16 @@
 #!/bin/bash
 source /etc/kiosk/setup
+SETUP_HOSTNAME=${SETUP_USER:=kooky}-$(printf "%02i" ${SETUP_KIOSK_ID:=1})
 update-initramfs -u
 update-grub
 systemctl daemon-reload
 systemctl enable management.service
 systemctl enable display-manager.service
 sudo -Eu "${SETUP_USER}" systemctl --user daemon-reload
-
+restorecon /etc/hosts
+restorecon /etc/hostname
+hostnamectl set-hostname $SETUP_HOSTNAME
+hostnamectl --static set-hostname $SETUP_HOSTNAME
 echo "Press enter to restart"
 read
 reboot
