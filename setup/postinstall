@@ -7,10 +7,6 @@ systemctl enable management.service
 systemctl enable display-manager.service
 sudo -Eu "${SETUP_USER}" systemctl --user daemon-reload
 
-echo "Press enter to set hostname and restart"
+echo "Press enter to restart"
 read
-restorecon
-hostnamectl --static set-hostname "${SETUP_USER}-${SETUP_KIOSK_ID}"
-echo "Preparing to restart..."
-sleep 10
 reboot
