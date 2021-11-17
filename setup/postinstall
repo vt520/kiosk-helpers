@@ -5,10 +5,10 @@ update-grub
 systemctl daemon-reload
 systemctl enable management.service
 systemctl enable display-manager.service
-sudo -u "${SETUP_USER}" systemctl --user daemon-reload
-sudo -u "${SETUP_USER}" systemctl --user enable remote.service
+sudo -Eu "${SETUP_USER}" systemctl --user daemon-reload
+sudo -Eu "${SETUP_USER}" systemctl --user enable remote.service
 
 echo "Press enter to set hostname and restart"
 read
-hostnamectl --static set-hostname "${SETUP_USER}-${SETUP_KIOSK_ID}"
+hostnamectl --static set-hostname "${SETUP_USER}_${SETUP_KIOSK_ID}"
 reboot
