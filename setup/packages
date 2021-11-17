@@ -11,7 +11,7 @@ echo "Checking individual packages ($TOTAL) packages total"
 while read PACKAGE ; do
 	COUNT=$(( $COUNT + 1 ))
 	[ -z "$PACKAGE" ] && continue;
-	[ ( dpkg -l | grep $PACKAGE > /dev/null ) ] && {
+	( dpkg -l | grep $PACKAGE > /dev/null ) && {
 		echo "Installed"
 		continue
 	}
