@@ -12,7 +12,7 @@ for FILE in $(find -type f); do
 		DIFF=$?
 		[ $DIFF -ne 1 ] && {
 			rm $PATCH > /dev/null
-			[ "$SETUP_FAT_TAR" == "YES" ] || echo rm "$FILE"
+			[ "${SETUP_FAT_TAR:=YES}" == "YES" ] || echo rm "$FILE"
 		}
 		[ $DIFF -eq 1 ] && {
 			echo "Rollback Patch for /$FILE at $(pwd)/$PATCH"

@@ -18,7 +18,7 @@ cd . #refresh directory
 
 tar cvjpf "$TEMP_TARBALL" --remove-files -- \
 	$(find  -maxdepth 1 -type d -not -path  "./setup" -and -not -iname ".*") LICENSE
-
+mkdir -p "$(dirname $SYSTEM_TARBALL)" > /dev/null
 mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
 
 cat <<- EOF
