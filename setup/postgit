@@ -3,6 +3,9 @@ echo $EXEC_USER_ID
 
 cd "$SETUP_LOCATION"
 cd ..
+echo
+echo "Configuting Setup"
+chmod a+xr $(find setup -type f -and -not -iname "*.*")
 
 echo
 echo "Configuring SD/OS Build"
