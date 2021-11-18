@@ -5,7 +5,8 @@ cd "$SETUP_LOCATION"
 cd ..
 echo
 echo "Configuting Setup"
-chmod a+xr $(find setup -type f -and -not -iname "*.*")
+chmod a+xr $(find setup -maxdepth 1 -type f -and -not -iname "*.*")
+chmod a+xr $(find setup/templates -type f)
 
 echo
 echo "Configuring SD/OS Build"
