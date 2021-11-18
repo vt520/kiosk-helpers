@@ -7,9 +7,9 @@
 exec 3< setup/prompts.list
 
 while read -u 3 VARIABLE DEFAULT PROMPT; do
-	echo
 	echo "$PROMPT"
 	read -p "$VARIABLE > " -i "${!VARIABLE:-$DEFAULT}" -e $VARIABLE
+	echo
 done
 
 TEMPFILE=$(tempfile)
