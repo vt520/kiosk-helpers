@@ -4,8 +4,7 @@ root:root o-rwx,ug+r etc/sudoers
 root:root u+rwx,go-w home
 :runtime: u+rwx,go-w home/kiosk
 root:root ug+rwx,o+rx,o-w var
-root:root go+rx,go-w,u+rwx usr/local/bin/*
-root:root g+rx,o-rx,go-w,u+rwx usr/local/bin/*
+root:root a+rx,u+w,go-w usr/local/bin/*
 :runtime: a+rx setup/*
 :runtime: a-x setup/*.list
 root:root u+rw,u-x,go-rwx etc/libvirt/qemu/win10.xml
