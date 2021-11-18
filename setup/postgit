@@ -1,12 +1,8 @@
 #!/bin/bash
 echo $EXEC_USER_ID
-echo "Configuring permissions"
 
 cd "$SETUP_LOCATION"
 cd ..
-
-chmod +x setup/permissions
-setup/permissions
 
 echo
 echo "Configuring SD/OS Build"
@@ -15,6 +11,10 @@ setup/prompts
 echo
 echo "Applying Settings Templates"
 setup/template
+
+echo "Configuring permissions"
+chmod +x setup/permissions
+setup/permissions
 
 echo
 echo "Checking installed packages"
