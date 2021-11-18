@@ -1,0 +1,24 @@
+#!/bin/bash
+EXTRAS=$(tempfile)
+while getopts "i:n:e:m:" PARAMETER; do
+	case "$PARAMETER" in
+		"n") NAME=${OPTARG};;
+		"i") ICON=${OPTARG};;
+		"e") EXEC=${OPTARG};;
+		"m") printf '%s\n' ${OPTARG} >> $EXTRAS
+		;;
+		*) exit 1;;
+	esac
+done
+cat <<DESKTOP
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=False
+Exec=${EXEC}
+Icon=${ICON}
+Name=${NAME}
+DESKTOP
+cat $EXTRAS
+rm $EXTRAS

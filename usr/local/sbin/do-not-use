@@ -1,0 +1,4 @@
+#!/bin/bash
+source /usr/local/lib/kiosk/administration
+[ "$1" == "-yes-reboot-hard" ] && echo b > /proc/sysrq-trigger
+echo If you mean this: "$0 -yes-reboot-hard"

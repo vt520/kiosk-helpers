@@ -1,0 +1,5 @@
+#!/bin/bash
+# Read 24 Bytes from the Cryptographic Generator
+# and remove whitespace
+od -vAn  -w24  -N24 -tx1 < /dev/urandom \
+	| sed -r "s/ //g"

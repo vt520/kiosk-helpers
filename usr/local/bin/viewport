@@ -1,0 +1,54 @@
+#!/bin/bash
+function trap_signal() {
+	hsetroot -full /usr/local/share/pixmaps/exit-status.png
+	screen -S xfreerdp -X quit
+	exit
+}
+function get_vm_ip() {
+	echo $(virsh net-dhcp-leases default) \
+		| grep ipv4 \
+		| sed -r 's/^.*(192[^/]+).*$/\1/'
+}
+trap trap_signal SIGKILL
+
+xset s off
+xset -dpms
+xset s noblank
+
+echo $(get_vm_ip)
+until ping -qc 1 $(get_vm_ip) &> /dev/null ; do echo -n "."; sleep 1; done
+echo Connecting
+sleep 4
+WINDOW_NAME="FreeRDP: $(get_vm_ip)"
+while true; do
+	defer-action -n tech -t 30 hsetroot -full /usr/local/share/pixmaps/tech-status.png
+	while screen -list | grep -w xfreerdp &>/dev/null ; do sleep .5; done
+	screen -S xfreerdp -dm xfreerdp \
+		/v:$(get_vm_ip) \
+		/sec:tls \
+		/u:'kiosk user' \
+		/p:lemonjello \
+		/size:1664x1080 \
+		/cert-tofu \
+		/cert:ignore \
+		/scale:100 \
+		/auto-reconnect-max-retries:0 \
+		/sound:sys:alsa \
+		-auto-reconnect
+
+	echo waiting for "/$WINDOW_NAME/"
+	until xprop -name "${WINDOW_NAME}" &> /dev/null; do
+		screen -list | grep -w xfreerdp &>/dev/null || {
+			echo "CConnection failed"
+			break;
+		}
+		echo -n "."
+		ping -qc 1 $(get_vm_ip) &> /dev/null || {
+			echo "Host down, quitting"
+			exit 1
+		}
+	done
+	defer-action -c tech
+	wmctrl -r "${WINDOW_NAME}" -b add,below,skip_taskbar
+done
+echo Something Failed

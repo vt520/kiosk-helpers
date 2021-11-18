@@ -1,0 +1,37 @@
+#!/bin/bash
+source /usr/local/lib/kiosk/user			# load the settings for an unpriviliaged script
+function display_idle() {				# Returns the integer output of xprintidle in seconds
+	IDLE=$(DISPLAY=:0 xprintidle)
+	echo $(( $IDLE / 1000 ))
+}
+function signal_handler() {
+	exit 0;
+}
+while getopts ":t:" PARAM; do				# Using getopts here instead of positional in case we
+	case "$PARAM" in				# Want to improve the function of this
+		"t") IDLE_LATCH_TIMEOUT=${OPTARG};;
+		*) echo $PARAM $OPTARG;;
+	esac
+done
+
+trap signal_handler SIGTERM
+
+shift $(($OPTIND - 1))					# Shift out the flags on the command line so $@ is the
+							# command we want to execute
+LAST_IDLE=0
+CURRENT_IDLE=1
+
+echo "Resolution: ${IDLE_LATCH_SLEEP} Starting latch; waiting for interaction"
+while [ $LAST_IDLE -lt $CURRENT_IDLE ]; do		# This is the latching loop; it's purpose is to wait
+	LAST_IDLE=$CURRENT_IDLE				# for a user interaction (the idle time gets lower)
+	sleep $IDLE_LATCH_SLEEP
+	CURRENT_IDLE=$(display_idle)
+done
+
+echo "Latch triggered, waiting for ${IDLE_LATCH_TIMEOUT} seconds idle"
+until [ $(display_idle) -gt $IDLE_LATCH_TIMEOUT ]; do	# This is the idle loop; once it gets here, we wait
+	sleep $IDLE_LATCH_SLEEP				# until our idle time is greater than our timeout
+done
+
+echo "Timeout Reached; executing $@"
+$@							# Start the process on and transfer control

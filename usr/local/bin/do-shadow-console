@@ -1,0 +1,18 @@
+#!/bin/bash
+#xpra shadow :0 \
+#	-z9 \
+#	--dbus-launch=no \
+#	--systemd-run=no \
+#	--notifications=no \
+#	--webcam=no \
+#	--system-tray=no \
+#	--html=on \
+#	--bind-tcp=0.0.0.0:14500,auth=none \
+#	--sharing=yes \
+#	--daemon=no \
+#	--readonly=no \
+#	--resize-display=no \
+#	--opengl \
+#	--input-method=xim \
+#	--bind-rfb=0.0.0.0:5901,auth=none
+x11vnc -display :0 -rfbport 5901 -forever -shared
