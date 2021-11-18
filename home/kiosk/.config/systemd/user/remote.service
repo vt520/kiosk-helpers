@@ -1,10 +1,12 @@
 [Unit]
 Description=Console RFB Provider
+StartLimitIntervalSec=0
 
 [Service]
 Type=simple
 ExecStart=do-shadow-console
-#Restart=always
+Restart=always
+RestartSec=20
 
 [Install]
-WantedBy=default.target
+WantedBy=graphical.target
