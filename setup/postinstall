@@ -1,14 +1,23 @@
 #!/bin/bash
 source /etc/kiosk/setup
 SETUP_HOSTNAME=${SETUP_USER:=kooky}-$(printf "%02i" ${SETUP_KIOSK_ID:=1})
+
 update-initramfs -u
 update-grub
+
 systemctl daemon-reload
 systemctl enable management.service
 systemctl enable display-manager.service
+
 sudo -Eu "${SETUP_USER}" systemctl --user daemon-reload
+
 restorecon /etc/hosts
 restorecon /etc/hostname
+USER_ID=$(id -u $SETUP_USER)
+USER_PATH=$(dbus-send --print-reply=literal --system --dest=org.freedesktop.Accounts /org/freedesktop/Accounts org.freedesktop.Accounts.FindUserById int64:$USER_ID)
+
+dbus-send --print-reply --system --dest=org.freedesktop.Accounts $USER_PATH org.freedesktop.Accounts.User.SetXSession string:'kiosk'
+
 echo "Press enter to restart"
 read
 reboot
