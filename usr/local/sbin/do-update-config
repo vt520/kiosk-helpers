@@ -1,3 +1,0 @@
-#!/bin/bash
-source /usr/local/lib/kiosk/administration
-/setup/templates/management_settings >> /etc/kiosk/generated/management

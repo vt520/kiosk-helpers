@@ -1,2 +1,0 @@
-#!/bin/bash
-sudo tail -fn0 `sudo find /var/log -type f`

@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Name=Kiosk Mode
-Comment=Kiosk Mode Test Session
-Exec=default
-Icon=
-Type=Application
-DesktopNames=KIOSK

@@ -4,6 +4,9 @@ echo $EXEC_USER_ID
 cd "$SETUP_LOCATION"
 cd ..
 
+echo "Marking setup files executable."
+chmod a+x $(find setup -type f -and -not -iname "*.*")
+
 echo
 echo "Configuring SD/OS Build"
 setup/prompts

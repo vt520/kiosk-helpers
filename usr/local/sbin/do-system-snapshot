@@ -1,9 +1,0 @@
-#!/bin/bash
-source /usr/local/lib/kiosk/administration
-ARCHIVE_FILE=$(tempfile)
-OUTPUT="$(dirname $ARCHIVE_FILE)/system-software-${KIOSK_TIMESTAMP}.tbz"
-echo Starting snapshot of system software
-tar cjpPf $ARCHIVE_FILE -T $KIOSK_CONFIGURATION/locations.list
-chown $KIOSK_USER:$KIOSK_GROUP $ARCHIVE_FILE
-mv $ARCHIVE_FILE $OUTPUT
-echo Snapshot $OUTPUT ready
