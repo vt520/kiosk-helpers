@@ -3,4 +3,4 @@
 	sudo $0 $@
 	exit $?
 }
-service gdm restart
+service display-manager restart
