@@ -2,9 +2,17 @@
 
 . /etc/profile
 . setup/promote
+if [ "${SETUP_MODE:-INSTALL}" != "INSTALL" ]; then
+	[ -e /etc/kiosk/setup ] || {
+		echo "Cannot update without an existing install"
+		exit 1
+	}
+	source /etc/kiosk/setup
+	PERM_USER_ID=$(id -u $SETUP_USER)
+fi
 
-PERM_USER="$(id -nu 1000)"
-PERM_GROUP="$(id -ng 1000)"
+PERM_USER="$(id -nu $PERM_USER_ID)"
+PERM_GROUP="$(id -ng $PERM_USER_ID)"
 EXEC_FOLDER="$(pwd)"
 
 cat <<- EOF
@@ -26,8 +34,10 @@ done
 
 SETUP_LOCATION="$(pwd)/setup"
 
-echo "Setting folder permissions"
+echo "Checking SSH permissions"
 chmod a-x,u+rw,go-rw /home/$PERM_USER/.ssh/*
+echo "Checking git permissions"
+
 chown -R "$PERM_USER:$PERM_GROUP" -- .
 chmod -R a+rw .
 
@@ -41,7 +51,7 @@ chmod a+xr $(find setup/templates -type f)
 
 echo
 echo "Configuring SD/OS Build"
-if [ "${SETUP_MODE:-FRESH}" == "FRESH" ]; then
+if [ "${SETUP_MODE:-INSTALL}" == "INSTALL" ]; then
 	setup/prompts
 else
 	echo "Upgrading using existing setup"
