@@ -1,8 +1,6 @@
 root:root a+rx,a-w usr
 root:root a+rx,a-w etc
 root:root o-rwx,ug+r etc/sudoers
-root:root u+rwx,go-w home
-:runtime: u+rwx,go-w home/kiosk
 root:root ug+rwx,o+rx,o-w var
 root:root a+rx,u+w,go-w usr/local/bin/*
 :runtime: a+rx setup/*
