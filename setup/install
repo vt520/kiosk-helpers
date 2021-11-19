@@ -35,6 +35,18 @@ echo "Updating Source"
 sudo -Eu "$PERM_USER" -- git reset --hard
 sudo -Eu "$PERM_USER" -- git pull
 
+echo "Configuting Setup Modules"
+chmod a+xr $(find setup -maxdepth 1 -type f -and -not -iname "*.*")
+chmod a+xr $(find setup/templates -type f)
+
+echo
+echo "Configuring SD/OS Build"
+if [ "${SETUP_MODE:-FRESH}" == "FRESH" ]; then
+	setup/prompts
+else
+	echo "Upgrading using existing setup"
+	cp /etc/kiosk/setup etc/kiosk/setup
+fi
+
 echo "Continuing Setup with fresh source"
-chmod a+x setup/postgit
 source setup/postgit
