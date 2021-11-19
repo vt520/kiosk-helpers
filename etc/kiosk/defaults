@@ -1,8 +1,9 @@
+source /etc/kiosk/setup
 KIOSK_ID=$(( $(hostname | sed -r "s/.*[^0-9]([0-9]+)$/\1/g") + 0 ))
 KIOSK_CONFIGURATION=$(dirname $BASH_SOURCE)
-KIOSK_PROFILE=$(getent passwd kiosk | sed -r 's/.*:([^:]+):[^:]+$/\1/g')
-KIOSK_USER=kiosk
-KIOSK_GROUP=$KIOSK_USER
+KIOSK_PROFILE=$(getent passwd ${SETUP_USER} | sed -r 's/.*:([^:]+):[^:]+$/\1/g')
+KIOSK_USER=${SETUP_USER}
+KIOSK_GROUP=${SETUP_USER}
 
 KIOSK_SSB_EXECUTABLE=$(which ssb)
 LIBVIRT_BASE=/var/libvirt/images

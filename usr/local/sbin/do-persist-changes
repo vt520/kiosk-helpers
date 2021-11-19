@@ -1,7 +1,7 @@
 #!/bin/bash
 source /usr/local/lib/kiosk/administration
 
-SOURCE_FOLDER='/home/kiosk'
+SOURCE_FOLDER=${KIOSK_PROFILE}
 ARCHIVE_STAMP="${KIOSK_TIMESTAMP}.tbz"
 ARCHIVE_FILE=${KIOSK_PERSIST%%.tbz}-${ARCHIVE_STAMP}
 
