@@ -22,7 +22,3 @@ USER_ID=$(id -u $SETUP_USER)
 USER_PATH=$(dbus-send --print-reply=literal --system --dest=org.freedesktop.Accounts /org/freedesktop/Accounts org.freedesktop.Accounts.FindUserById int64:$USER_ID)
 
 dbus-send --print-reply --system --dest=org.freedesktop.Accounts $USER_PATH org.freedesktop.Accounts.User.SetXSession string:'kiosk'
-
-echo "Press enter to restart"
-read
-reboot

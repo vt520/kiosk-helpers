@@ -31,3 +31,8 @@ setup/image
 echo
 echo "Running post-install"
 setup/postinstall
+
+echo
+echo "Restarting in 30 seconds"
+sleep 30
+reboot
