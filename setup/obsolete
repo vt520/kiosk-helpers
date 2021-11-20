@@ -1,0 +1,10 @@
+#!/bin/bash
+COUNT=0
+TOTAL=$( wc -l < setup/obsolete.list )
+echo
+echo "Scanning for uneeded files"
+while read FILE ; do
+	COUNT=$(( $COUNT + 1 ))
+	[ -z "$PACKAGE" ] && continue;
+	[ -e "$FILE" ] && rm -rf "$FILE"
+done < setup/obsolete.list

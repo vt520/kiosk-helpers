@@ -3,7 +3,7 @@ FOLDER=$(pwd)
 BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
 which unzip > /dev/null || {
 	echo "Installing unzip"
-	sudo apt install unzip -qqy
+	sudo apt install unzip -qqy > /dev/null
 }
 [ -e "$BOOTSTRAP_FILE" ] || {
 	echo "Trying to download current packages"
@@ -68,12 +68,11 @@ echo "$FOLDER/.git/"
 	git init > /dev/null
 }
 
-# this part needs to run as sudo
 [ "$FOLDER" != "/setup/kiosk-helpers" ] && {
 	echo "Relocating folder to /setup"
-	sudo mkdir -p /setup
-	sudo rm -rf /setup/kiosk-helpers
-	sudo mv "$FOLDER" /setup/kiosk-helpers
+	mkdir -p /setup
+	rm -rf /setup/kiosk-helpers
+	mv "$FOLDER" /setup/kiosk-helpers
 	FOLDER="/setup/kiosk-helpers"
 }
 cd "$FOLDER"
@@ -83,8 +82,8 @@ cd "$FOLDER"
 echo "Updating to current"
 USER_ID="$(id -nu):$(id -ng)"
 
-sudo -- chown -R $USER_ID /setup/kiosk-helpers
-sudo -- chmod  u+rwx $(find /setup/kiosk-helpers/* -type d)
+chown -R $USER_ID /setup/kiosk-helpers
+chmod  u+rwx $(find /setup/kiosk-helpers/* -type d)
 
 git reset --hard > /dev/null
 git pull | grep " is now at "
@@ -99,5 +98,5 @@ EOF
 sleep 5 || echo "use 'cd .' to reload your directory"
 cd "$FOLDER"
 
-sudo -- chmod  a+x setup/install
+chmod  a+x setup/install
 setup/install

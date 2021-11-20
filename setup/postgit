@@ -1,5 +1,4 @@
 #!/bin/bash
-echo $EXEC_USER_ID
 
 cd "$SETUP_LOCATION"
 cd ..
@@ -8,8 +7,8 @@ echo
 echo "Applying Settings Templates"
 setup/template
 
+echo
 echo "Configuring permissions"
-chmod +x setup/permissions
 setup/permissions
 
 echo
@@ -27,6 +26,10 @@ setup/archive
 echo
 echo "Installing / Updating Base Image"
 setup/image
+
+echo
+echo "Removing Obsolete Files"
+setup/obsolete
 
 echo
 echo "Running post-install"
