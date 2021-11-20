@@ -32,3 +32,4 @@ while read PACKAGE ; do
 		fi
 	}
 done < setup/packages.list
+exit 0
