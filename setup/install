@@ -38,7 +38,8 @@ echo "Updating Source"
 git reset --hard &> /dev/null
 git pull &> /dev/null
 
-echo "Configuting Setup Modules"
+echo
+echo "Checking setup executable flags"
 chmod a+xr $(find setup -maxdepth 1 -type f -and -not -iname "*.*")
 chmod a+xr $(find setup/templates -type f)
 
