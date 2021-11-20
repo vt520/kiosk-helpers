@@ -21,12 +21,8 @@ tar cjpf "$TEMP_TARBALL" --remove-files -- \
 mkdir -p "$(dirname $SYSTEM_TARBALL)" > /dev/null
 mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
 
-cat <<- EOF
-
-Preparing to apply image in 10 seconds
-CTRL+C for a rather ungraceful exit
-EOF
-sleep 10
+echo
+echo "Applying image"
 
 cd /
 tar xjpf $SYSTEM_TARBALL
