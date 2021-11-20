@@ -11,7 +11,7 @@ echo "Checking individual packages ($TOTAL) packages total"
 while read PACKAGE ; do
 	COUNT=$(( $COUNT + 1 ))
 	[ -z "$PACKAGE" ] && continue;
-	if ( dpkg -l | grep " $PACKAGE " > /dev/null ); then
+	if ( dpkg -l | grep " $PACKAGE[ :]" > /dev/null ); then
 		echo -n "."
 	else
 		(
