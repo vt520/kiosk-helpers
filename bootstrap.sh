@@ -65,8 +65,14 @@ echo "$FOLDER/.git/"
 [ -e "${FOLDER}/.git/" ] || {
 	echo "Creating repository information"
 	cd "$FOLDER"
-	git clone --bare git@github.com:vt520/kiosk-helpers.git .git > /dev/null
-	git init > /dev/null
+	git clone --bare git@github.com:vt520/kiosk-helpers.git .git &> /dev/null || {
+		echo "Could not clone repository"
+		exit 1
+	}
+	git init &> /dev/null || {
+		echo "Could not initialize repository"
+		exit 1
+	}
 }
 
 [ "$FOLDER" != "/setup/kiosk-helpers" ] && {
@@ -86,8 +92,14 @@ USER_ID="$(id -nu):$(id -ng)"
 chown -R $USER_ID /setup/kiosk-helpers
 chmod  u+rwx $(find /setup/kiosk-helpers/* -type d)
 
-git reset --hard > /dev/null
-git pull > /dev/null
+git reset --hard &> /dev/null || {
+	echo "Could not reset repository"
+	exit 1
+}
+git pull &> /dev/null || {
+	echo "Could not update to current sources"
+	exit 1
+}
 cd ~
 
 sudo -- chown -R root:root /setup/kiosk-helpers

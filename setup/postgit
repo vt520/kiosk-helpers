@@ -5,35 +5,65 @@ cd ..
 
 echo
 echo "Applying Settings Templates"
-setup/template
+setup/template || {
+	echo "Template setup failed"
+	exit 1
+}
 
 echo
 echo "Configuring permissions"
-setup/permissions
+setup/permissions || {
+	echo "Permission configuration failed"
+	exit 1
+}
+
 
 echo
 echo "Checking installed packages"
-setup/packages
+setup/packages || {
+	echo "Could not verify all packages"
+	exit 1
+}
+
 
 echo
 echo "Creating uninstall patches"
-setup/patches
+setup/patches || {
+	echo "Could not generate patches"
+	exit 1
+}
+
 
 echo
 echo "Creating System Tarball"
-setup/archive
+setup/archive || {
+	echo "System Packaging Failed"
+	exit 1
+}
+
 
 echo
 echo "Installing / Updating Base Image"
-setup/image
+setup/image || {
+	echo "Could not install system image"
+	exit 1
+}
+
 
 echo
 echo "Removing Obsolete Files"
-setup/obsolete
+setup/obsolete || {
+	echo "Could not remove obsolete files"
+	exit 1
+}
+
 
 echo
 echo "Running post-install"
-setup/postinstall
+setup/postinstall || {
+	echo "Post-Installation Configuration failed"
+	exit 1
+}
 
 echo
 echo "Restarting in 30 seconds"
