@@ -91,13 +91,17 @@ git pull | grep " is now at "
 cd ~
 
 sudo -- chown -R root:root /setup/kiosk-helpers
+cd "$FOLDER"
+mv bootstrap.sh reinstall
+chmod +x reinstall
+
 cat <<- EOF
 	Bootstrapping finished; starting installer in 5 seconds
-	hit CTRL+C to abort
-	$FOLDER
+	hit CTRL+C to abort.
+
+	To Re-Run this script, execute /setup/kiosk-helpers/reinstall
 EOF
 sleep 5 || echo "use 'cd .' to reload your directory"
-cd "$FOLDER"
 
 chmod  a+x setup/install
 setup/install
