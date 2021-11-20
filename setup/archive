@@ -22,7 +22,7 @@ mkdir -p "$(dirname $SYSTEM_TARBALL)" > /dev/null
 mv "$TEMP_TARBALL" "$SYSTEM_TARBALL"
 
 echo
-echo "Applying image"
+echo "Applying tarball"
 
 cd /
 tar xjpf $SYSTEM_TARBALL
