@@ -16,9 +16,10 @@ rm /etc/X11/sawfish/site-init.d/00menu.jl &> /dev/null
 update-initramfs -u
 update-grub
 
-systemctl daemon-reload
-systemctl enable management.service
-systemctl enable display-manager.service
+systemctl daemon-reload &> /dev/null
+systemctl enable management.service &> /dev/null
+systemctl enable display-manager.service &> /dev/null
+systemctl disable cloud-init &> /dev/null
 
 sudo -Eu "${SETUP_USER}" systemctl --user daemon-reload
 

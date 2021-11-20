@@ -9,16 +9,26 @@ EXIT_CODE=0
 		exit 1
 	}
 	pushd / > /dev/null
-	echo "Downloading initial system image"
+	[ -e /etc/kiosk/image-info ] && source /etc/kiosk/image-info
 
-	wget --show-progress \
-		-qcO /dev/stdout "$SETUP_DOMAIN_IMAGE_URL" \
-		| openssl enc \
-			-d -pbkdf2 \
-			-iter 100000 \
-			-pass env:SETUP_HASHWORD \
-		| tar xj
-	EXIT_CODE=$?
-	popd > /dev/null
+	echo "Examining remote image"
+	CURRENT_HASH=$(setup/remote_hash "$SETUP_DOMAIN_IMAGE_URL")
+
+	if [ "$CURRENT_HASH" != "$INSTALLED_HASH" ]; then
+		echo "Downloading initial system image"
+
+		wget --show-progress \
+			-qcO /dev/stdout "$SETUP_DOMAIN_IMAGE_URL" \
+			| openssl enc \
+				-d -pbkdf2 \
+				-iter 100000 \
+				-pass env:SETUP_HASHWORD \
+			| tar xj
+		echo "INSTALLED_HASH=$CURRENT_HASH" > /etc/kiosk/image-info
+		EXIT_CODE=$?
+		popd > /dev/null
+	else
+		echo "System Image Up to Date"
+	fi
 }
 exit $EXIT_CODE
