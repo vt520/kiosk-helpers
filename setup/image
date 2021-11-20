@@ -8,13 +8,14 @@ EXIT_CODE=0
 		echo "No setup found"
 		exit 1
 	}
-	pushd / > /dev/null
-	[ -e /etc/kiosk/image-info ] && source /etc/kiosk/image-info
 
 	echo "Examining remote image"
-	CURRENT_HASH=$($SETUP_LOCATION/remote_hash "$SETUP_DOMAIN_IMAGE_URL")
+	CURRENT_HASH=$(setup/remote_hash "$SETUP_DOMAIN_IMAGE_URL")
+
+	[ -e /etc/kiosk/image-info ] && source /etc/kiosk/image-info
 
 	if [ "$CURRENT_HASH" != "$INSTALLED_HASH" ]; then
+		pushd / > /dev/null
 		echo "Downloading initial system image"
 
 		wget --show-progress \
