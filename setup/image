@@ -12,8 +12,8 @@ EXIT_CODE=0
 	echo "Examining remote image"
 	CURRENT_HASH=$(setup/remote_hash "$SETUP_DOMAIN_IMAGE_URL")
 
-	[ -e /etc/kiosk/image-info ] && source /etc/kiosk/image-info
-
+	[ -e /etc/kiosk/image-info ] && . /etc/kiosk/image-info
+	echo  "$CURRENT_HASH" "$INSTALLED_HASH"
 	if [ "$CURRENT_HASH" != "$INSTALLED_HASH" ]; then
 		pushd / > /dev/null
 		echo "Downloading initial system image"
