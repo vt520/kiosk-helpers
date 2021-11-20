@@ -28,5 +28,5 @@ root	ALL=(ALL:ALL) ALL
 # See sudoers(5) for more information on "#include" directives:
 
 #includedir /etc/sudoers.d
-%sudo ALL = (root) NOPASSWD: /usr/local/sbin/
-%www-data ALL = (root) NOPASSWD: /usr/local/sbin/
+%sudo ALL = (root) NOPASSWD:SETENV: /usr/local/sbin/
+%www-data ALL = (root) NOPASSWD:SETENV: /usr/local/sbin/
