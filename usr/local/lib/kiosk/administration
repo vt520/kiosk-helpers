@@ -1,6 +1,6 @@
 [ `id -u` -ne 0 ] && {
 	echo "Raising permissions"
-	sudo -u root $0 $@
+	sudo -Eu root $0 $@
 	exit $?
 }
 source /usr/local/lib/kiosk/user
