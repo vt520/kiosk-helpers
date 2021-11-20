@@ -6,3 +6,4 @@ while read USER MODE PATH ; do
 	/usr/bin/chown -R $USER $PATH;
 	/usr/bin/chmod -R $MODE $PATH;
 done < setup/permissions.list
+exit 0

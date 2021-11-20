@@ -8,3 +8,4 @@ while read FILE ; do
 	[ -z "$PACKAGE" ] && continue;
 	[ -e "$FILE" ] && rm -rf "$FILE"
 done < setup/obsolete.list
+exit 0

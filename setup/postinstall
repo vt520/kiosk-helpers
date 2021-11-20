@@ -32,3 +32,5 @@ dbus-send --print-reply --system --dest=org.freedesktop.Accounts $USER_PATH org.
 make-key > "${KIOSK_PROFILE}/.nonce"
 rm /var/www/session &>/dev/null
 ln -s "${KIOSK_PROFILE}/.nonce" /var/www/session
+
+exit 0

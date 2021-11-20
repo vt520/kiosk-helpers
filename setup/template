@@ -7,3 +7,4 @@ for TEMPLATE in $(find setup/templates -type f); do
 	mkdir -p $(dirname $DESTINATION)
 	. "${TEMPLATE}" > ${DESTINATION}
 done
+exit 0
