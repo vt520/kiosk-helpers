@@ -34,13 +34,6 @@ done
 
 SETUP_LOCATION="$(pwd)/setup"
 
-echo "Checking SSH permissions"
-chmod a-x,u+rw,go-rw /home/$PERM_USER/.ssh/*
-echo "Checking git permissions"
-
-chown -R "$PERM_USER:$PERM_GROUP" -- .
-chmod -R a+rw .
-
 echo "Updating Source"
 git reset --hard
 git pull
