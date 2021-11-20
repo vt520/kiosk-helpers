@@ -6,5 +6,3 @@ root:root a+rx,u+w,go-w usr/local/bin/*
 :runtime: a+rx setup/*
 :runtime: a-x setup/*.list
 root:root u+rw,u-x,go-rwx etc/libvirt/qemu/win10.xml
-root:root u+rwx,og-rwx etc/kiosk/protected
-root:root a-x etc/kiosk/protected/identity*
