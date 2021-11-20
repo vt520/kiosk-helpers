@@ -1,4 +1,9 @@
 #!/bin/bash
+function bail() {
+	echo "$@"
+	exit 1
+}
+
 source /etc/kiosk/setup
 source /usr/local/lib/kiosk/administration
 
@@ -16,12 +21,13 @@ rm /etc/X11/sawfish/site-init.d/00menu.jl &> /dev/null
 update-initramfs -u
 update-grub
 
-systemctl daemon-reload &> /dev/null
-systemctl enable management.service &> /dev/null
-systemctl enable display-manager.service &> /dev/null
-systemctl disable cloud-init &> /dev/null
+systemctl daemon-reload &> /dev/null || bail "Could not reload daemons"
+systemctl enable management.service &> /dev/null || bail "management service not configured"
+systemctl enable display-manager.service &> /dev/null || bail "Display manager not configured"
+systemctl disable cloud-init &> /dev/null || bail "Could not disable cloud init"
 
-sudo -Eu "${SETUP_USER}" systemctl --user daemon-reload
+sudo -Eu "${SETUP_USER}" systemctl --user daemon-reload &> /dev/null || bail "Could not reload user daemons"
+sudo -Eu "${SETUP_USER}" systemctl enable remote &> /dev/null || bail "Could not reload user daemons"
 
 restorecon /etc/hosts
 restorecon /etc/hostname
