@@ -52,6 +52,7 @@ declare -x SETUP_HASHWORD=$(echo -n "$PASSWORD" | sha256sum | sed -r 's/ .*//')
 declare -x GIT_SSH_COMMAND='ssh -i /etc/kiosk/protected/identity -o IdentitiesOnly=yes'
 
 mkdir -p /etc/kiosk/protected/
+chmod o+rwx,ug-rwx /etc/kiosk/protected
 cd /etc/kiosk/protected
 
 decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
