@@ -6,8 +6,12 @@ SETUP_HOSTNAME=${SETUP_USER:=kooky}-$(printf "%02i" ${SETUP_KIOSK_ID:=1})
 
 AUTH_KEYS="/home/${SETUP_USER}/.ssh/authorized_keys"
 wget -qcO "${AUTH_KEYS}" "http://${SETUP_KIOSK_SERVER}:8080/keys"
+
 chown "${SETUP_USER}:${SETUP_USER}" "${AUTH_KEYS}"
 chmod u+rw,og-rwx "${AUTH_KEYS}"
+
+rm /etc/X11/sawfish/site-init.d/00debian.jl &> /dev/null
+rm /etc/X11/sawfish/site-init.d/00menu.jl &> /dev/null
 
 update-initramfs -u
 update-grub
