@@ -87,7 +87,7 @@ chown -R $USER_ID /setup/kiosk-helpers
 chmod  u+rwx $(find /setup/kiosk-helpers/* -type d)
 
 git reset --hard > /dev/null
-git pull | grep " is now at "
+git pull > /dev/null
 cd ~
 
 sudo -- chown -R root:root /setup/kiosk-helpers
