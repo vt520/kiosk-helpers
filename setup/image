@@ -2,6 +2,7 @@
 [ -e /etc/kiosk/setup ] && source /etc/kiosk/setup
 
 [ -n "$SETUP_HASHWORD" ] && {
+	declare -x SETUP_HASHWORD
 	[ -e "/etc/kiosk/setup" ] || {
 		echo "No setup found"
 		exit 1
