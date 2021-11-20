@@ -1,0 +1,4 @@
+#!/bin/bash
+source /usr/local/lib/kiosk/administration
+cd /setup/kiosk-helpers
+setup/update
