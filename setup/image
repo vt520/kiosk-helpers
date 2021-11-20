@@ -1,15 +1,13 @@
 #!/bin/bash
+[ -e etc/kiosk/setup ] && source etc/kiosk/setup
 
 [ -n "$SETUP_HASHWORD" ] && {
 	[ -e "/etc/kiosk/setup" ] || {
 		echo "No setup found"
 		exit 1
 	}
-	. /etc/kiosk/setup
 	pushd / > /dev/null
 	echo "Downloading initial system image"
-
-	# declare -x SETUP_DOMAIN_IMAGE_URL="http://kiosks.energyservices.org:8080/image"
 
 	wget --show-progress \
 		-qcO /dev/stdout "$SETUP_DOMAIN_IMAGE_URL" \
@@ -17,6 +15,6 @@
 			-d -pbkdf2 \
 			-iter 100000 \
 			-pass env:SETUP_HASHWORD \
-		| tar xjv
+		| tar xj
 	popd > /dev/null
 }
