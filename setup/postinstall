@@ -26,8 +26,8 @@ systemctl enable management.service &> /dev/null || bail "management service not
 systemctl enable display-manager.service &> /dev/null || bail "Display manager not configured"
 systemctl disable cloud-init &> /dev/null || bail "Could not disable cloud init"
 
-sudo -Eu "${SETUP_USER}" systemctl --user daemon-reload &> /dev/null || bail "Could not reload user daemons"
-sudo -Eu "${SETUP_USER}" systemctl enable remote &> /dev/null || bail "Could not reload user daemons"
+sudo -iu "${SETUP_USER}" -- systemctl --user daemon-reload &> /dev/null || bail "Could not reload user daemons"
+sudo -iu "${SETUP_USER}" -- systemctl enable remote &> /dev/null || bail "Could not reload user daemons"
 
 restorecon /etc/hosts
 restorecon /etc/hostname
