@@ -1,5 +1,5 @@
 #!/bin/bash
-
+declare -x GIT_SSH_COMMAND='ssh -i /etc/kiosk/protected/identity -o IdentitiesOnly=yes'
 . /etc/profile
 . setup/promote
 if [ "${SETUP_MODE:-INSTALL}" != "INSTALL" ]; then
@@ -42,8 +42,8 @@ chown -R "$PERM_USER:$PERM_GROUP" -- .
 chmod -R a+rw .
 
 echo "Updating Source"
-sudo -Eu "$PERM_USER" -- git reset --hard
-sudo -Eu "$PERM_USER" -- git pull
+git reset --hard
+git pull
 
 echo "Configuting Setup Modules"
 chmod a+xr $(find setup -maxdepth 1 -type f -and -not -iname "*.*")

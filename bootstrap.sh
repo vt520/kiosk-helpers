@@ -27,6 +27,8 @@ which unzip > /dev/null || {
 	exit
 }
 
+source setup/promote
+
 read -sp "Bootstrap Password > " -e PASSWORD
 echo
 
@@ -47,24 +49,14 @@ decrypt_file "$BOOTSTRAP_FILE" | tar tj &> /dev/null  || {
 
 echo $(echo -n "$PASSWORD" | sha256sum | sed -r 's/ .*//')
 declare -x SETUP_HASHWORD=$(echo -n "$PASSWORD" | sha256sum | sed -r 's/ .*//')
+declare -x GIT_SSH_COMMAND='ssh -i /etc/kiosk/protected/identity -o IdentitiesOnly=yes'
 
-cat <<- EOF
-This is going to change your SSH User keys and the location of this repo.
-The keys are pre-registered with the remote server for immediate access.
-The repository will be moved to /setup and have proper permissions applied
+mkdir -p /etc/kiosk/protected/
+cd /etc/kiosk/protected
 
-type "BAIL" without quotes to exit; anything else to continue
-EOF
-read -p "Proceed? > " -e PROCEED
-[ "$PROCEED" != "BAIL" ] || exit
-
-cd ~
-[ -e .ssh ] || mkdir .ssh
-chmod u+rwx,go-rwx .ssh
-cd .ssh
 decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
-	mv -f "sdios_bootstrap" "id_rsa"
-	mv -f "sdios_bootstrap.pub" "id_rsa.pub"
+	mv -f "sdios_bootstrap" "identity"
+	mv -f "sdios_bootstrap.pub" "identity.pub"
 	chmod u+rw,ugo-x,og-rw *
 }
 
@@ -83,8 +75,8 @@ echo "$FOLDER/.git/"
 	sudo rm -rf /setup/kiosk-helpers
 	sudo mv "$FOLDER" /setup/kiosk-helpers
 	FOLDER="/setup/kiosk-helpers"
-	cd "$FOLDER"
 }
+cd "$FOLDER"
 
 [ -e /setup/kiosk-helpers ] && cd /setup/kiosk-helpers
 
