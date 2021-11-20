@@ -1,5 +1,5 @@
 #!/bin/bash
-[ -e etc/kiosk/setup ] && source etc/kiosk/setup
+[ -e /etc/kiosk/setup ] && source /etc/kiosk/setup
 
 [ -n "$SETUP_HASHWORD" ] && {
 	[ -e "/etc/kiosk/setup" ] || {
