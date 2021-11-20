@@ -26,8 +26,12 @@ systemctl enable management.service &> /dev/null || bail "management service not
 systemctl enable display-manager.service &> /dev/null || bail "Display manager not configured"
 systemctl disable cloud-init &> /dev/null || bail "Could not disable cloud init"
 
-systemctl --global daemon-reload &> /dev/null || bail "Could not reload user daemons"
-systemctl --global enable remote &> /dev/null || bail "Could not enable remote unit"
+XDG=/run/user/$(id -u $SETUP_USER)
+
+sudo -u $SETUP_USER XDG_RUNTIME_DIR=$XDG \
+	systemctl --user daemon-reload &> /dev/null || bail "Could not reload user daemons"
+sudo -u $SETUP_USER XDG_RUNTIME_DIR=$XDG \
+	systemctl --user enable remote &> /dev/null || bail "Could not enable remote unit"
 
 restorecon /etc/hosts
 restorecon /etc/hostname
