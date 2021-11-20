@@ -1,13 +1,11 @@
 #!/bin/bash
-[ `id -u` -ne 0 ] && {
-        sudo $0 $@
-        exit $?
-}
+source /usr/local/lib/kiosk/administration
+
 SOURCE_PATH='\/var\/lib\/libvirt\/images\/win10.qcow2'
-DEST_PATH='\/home\/kiosk\/domain.qcow2'
-SOURCE_UUID='2dd1008c-2f84-4f28-bbbe-72f80d64a664'
-DEST_UUID='4283d346-1fc2-11ec-abad-8f869913231d'
-DOMAIN_FILE="/home/kiosk/domain.xml"
+DEST_PATH=$(echo ${KIOSK_PROFILE}/domain.qcow2 | sed -r "s/([/])/\\\\\1/g")
+SOURCE_UUID=$KIOSK_SOURCE_UUID
+DEST_UUID=$KIOSK_RT_UUID
+DOMAIN_FILE="${KIOSK_PROFILE}/domain.xml"
 virsh dumpxml win10 \
 	| sed -r "s/${SOURCE_PATH}/${DEST_PATH}/g" \
 	| sed -r "s/${SOURCE_UUID}/${DEST_UUID}/g" \

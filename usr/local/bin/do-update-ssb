@@ -1,8 +1,6 @@
 #!/bin/bash
 source /usr/local/lib/kiosk/user
 
-#SSB_CONFIG="/home/kiosk/.config/ssb"
-#APP_LOCATION="/home/kiosk/.local/share/applications"
 SSB_CACHE_DIR="$KIOSK_PROFILE/.chrome"
 
 pushd $KIOSK_SSB_CONFIG

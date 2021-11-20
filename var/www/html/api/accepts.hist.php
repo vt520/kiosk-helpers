@@ -8,7 +8,7 @@
 
 	if(array_key_exists("auth", $_GET)) {
 		$my_auth = strtolower(trim($_GET["auth"]));
-		$check_auth = strtolower(trim(file_get_contents("/home/kiosk/.nonce")));
+		$check_auth = strtolower(trim(file_get_contents("/var/www/session")));
 		$r = new auth_token($my_auth == $check_auth);
 		echo(json_encode($r));
 	} else {

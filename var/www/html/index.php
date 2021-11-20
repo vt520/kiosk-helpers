@@ -55,7 +55,7 @@
 		(new json_error(401, "Unauthorized"))->finish();
 	} else {
 		$my_auth = strtolower(trim($_GET["auth"]));
-                $check_auth = strtolower(trim(file_get_contents("/home/kiosk/.nonce")));
+                $check_auth = strtolower(trim(file_get_contents("/var/www/session")));
 		if($my_auth !== $check_auth) (new json_error(402, "Access Denied"))->finish();
 	}
 

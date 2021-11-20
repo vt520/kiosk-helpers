@@ -1,15 +1,14 @@
 #!/bin/bash
-[ `id -u` -ne 0 ] && {
-        sudo $0 $@
-        exit $?
-}
+source /usr/local/lib/kiosk/administration
+
 BASE_QCOW='/var/lib/libvirt/images/win10.qcow2'
-DEST_QCOW='/home/kiosk/image.qcow2'
-RUN_QCOW='/home/kiosk/domain.qcow2'
+DEST_QCOW="${KIOSK_PROFILE}/image.qcow2"
+RUN_QCOW="${KIOSK_PROFILE}/domain.qcow2"
 
 virsh shutdown --domain win10 &> /dev/null
 virsh destroy win10-ro &> /dev/null
-rm /home/kiosk/image.qcow2
+rm "${KIOSK_PROFILE}/image.qcow2" &> /dev/null
+
 qemu-img create \
 	-f qcow2 -F qcow2 \
 	-b $BASE_QCOW \

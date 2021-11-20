@@ -1,7 +1,7 @@
 #!/bin/bash
 source /usr/local/lib/kiosk/administration
-SOURCE_QCOW='/home/kiosk/image.qcow2'
-RUN_QCOW='/home/kiosk/domain.qcow2'
+SOURCE_QCOW="${KIOSK_PROFILE}/image.qcow2"
+RUN_QCOW="${KIOSK_PROFILE}/domain.qcow2"
 virsh destroy --domain win10-ro &> /dev/null
 TEMP=$(mktemp -d);
 mv -f $RUN_QCOW $TEMP/&> /dev/null
@@ -11,4 +11,4 @@ chown kiosk:kiosk $RUN_QCOW
 	echo "Patch failed: restoring old image"
 	mv -f $TEMP/$(basename $RUN_QCOW) $RUN_QCOW&> /dev/null
 } ) | tee -a /root/patch.log
-virsh create /home/kiosk/domain.xml
+virsh create "${KIOSK_PROFILE}/domain.xml"

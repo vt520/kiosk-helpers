@@ -5,8 +5,7 @@
 /etc/nginx
 /etc/ssh/
 /etc/sudoers
-/home/kiosk/.config/systemd/user
-/home/kiosk/.ssh
+/home/*/.ssh
 /usr/local/bin
 /usr/local/lib/kiosk
 /usr/local/lib/systemd/system

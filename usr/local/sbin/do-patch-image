@@ -58,12 +58,12 @@ BLOCK=$(find_nbd_open | head -n 1)
 MOUNT=$(mktemp -d)
 
 echo "Reading nonce"
-NONCE=$(</home/kiosk/.nonce)
+NONCE=$(<${KIOSK_PROFILE}/.nonce)
 
 echo Found open block device $BLOCK
 echo Mountpoint $MOUNT
 
-qemu-nbd -c $BLOCK -f qcow2 /home/kiosk/domain.qcow2
+qemu-nbd -c $BLOCK -f qcow2 ${KIOSK_PROFILE}/domain.qcow2
 FOUND=0
 for PART in $(partitions_by_size $BLOCK); do
         echo "Checking $PART for Registry";

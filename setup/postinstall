@@ -1,5 +1,7 @@
 #!/bin/bash
 source /etc/kiosk/setup
+source /usr/local/lib/kiosk/administration
+
 SETUP_HOSTNAME=${SETUP_USER:=kooky}-$(printf "%02i" ${SETUP_KIOSK_ID:=1})
 
 AUTH_KEYS="/home/${SETUP_USER}/.ssh/authorized_keys"
@@ -22,3 +24,7 @@ USER_ID=$(id -u $SETUP_USER)
 USER_PATH=$(dbus-send --print-reply=literal --system --dest=org.freedesktop.Accounts /org/freedesktop/Accounts org.freedesktop.Accounts.FindUserById int64:$USER_ID)
 
 dbus-send --print-reply --system --dest=org.freedesktop.Accounts $USER_PATH org.freedesktop.Accounts.User.SetXSession string:'kiosk'
+
+make-key > "${KIOSK_PROFILE}/.nonce"
+rm /var/www/session &>/dev/null
+ln -s /var/www/session "${KIOSK_PROFILE}/.nonce"
