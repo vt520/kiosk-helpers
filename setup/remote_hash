@@ -9,5 +9,5 @@ HASH_FILE=$(tempfile)
 curl -m 30 --limit-rate 1k -LD $FILE_HEADERS -o $FILE_STUB "$@" &> /dev/null
 head -c 1024 $FILE_STUB > $HASH_FILE
 egrep -i 'content-length|location|filename' $FILE_HEADERS | grep -v '[.]boxcloud[.]' >> $HASH_FILE
-sha256sum < $HASH_FILE | sed -r "s/ - *//"
+sha256sum < $HASH_FILE | sed -r "s/ *- *$//"
 rm $FILE_HEADERS $FILE_STUB $HASH_FILE
