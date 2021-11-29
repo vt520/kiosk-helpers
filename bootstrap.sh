@@ -1,6 +1,9 @@
 #!/bin/bash
 FOLDER=$(pwd)
 BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
+echo "!!!" $BASH_ARGV0
+BASH_ARGV0=$(pwd)/$0
+echo "!!!" $BASH_ARGV0
 
 function decrypt_file () {
 	openssl enc -d \
@@ -38,7 +41,6 @@ function decrypt_file () {
 	source bootstrap.sh
 	exit
 }
-
 source setup/promote
 
 read -sp "Bootstrap Password > " -e PASSWORD
