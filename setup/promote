@@ -2,7 +2,7 @@
 
 EXEC_USER_ID=$(id -u)
 [ $EXEC_USER_ID -ne 0 ] && {
-	echo $(pwd) $EXEC_USER_ID $0
+	echo $(pwd) $EXEC_USER_ID ${FOLDER}/$(basename $0)
         PERM_USER_ID=$EXEC_USER_ID sudo -Eu root -- $0 $@
 
         exit $?
