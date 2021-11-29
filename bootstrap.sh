@@ -2,7 +2,7 @@
 FOLDER=$(pwd)
 BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
 echo "!!!" $BASH_ARGV0
-BASH_ARGV0=$(pwd)/$0
+BASH_ARGV0=$(pwd)/$(basename $0)
 echo "!!!" $BASH_ARGV0
 
 function decrypt_file () {
