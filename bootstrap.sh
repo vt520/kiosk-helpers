@@ -1,13 +1,25 @@
 #!/bin/bash
 FOLDER=$(pwd)
 BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
-which unzip > /dev/null || {
-	echo "Installing unzip"
-	sudo apt install unzip -qqy > /dev/null
+
+function decrypt_file () {
+	openssl enc -d \
+	-md sha512 \
+	-pbkdf2 \
+	-iter 100000 \
+	-aes256 \
+	-pass stdin \
+	-in "$1" <<<"$PASSWORD" 2> /dev/null
 }
+
+
 [ -e "$BOOTSTRAP_FILE" ] || {
 	echo "Trying to download current packages"
-	which wget || sudo apt-get install -qqy wget
+	which unzip > /dev/null || {
+		echo "Installing unzip"
+		sudo apt install unzip -qqy > /dev/null
+	}
+	which wget > /dev/null || sudo apt-get install -qqy wget
 	wget -q -O "main.zip" "https://github.com/vt520/kiosk-helpers/archive/refs/heads/main.zip" || {
 		cat <<- EOF
 			Somethings really broken, you're missing some important files.
@@ -32,16 +44,7 @@ source setup/promote
 read -sp "Bootstrap Password > " -e PASSWORD
 echo
 
-function decrypt_file () {
-	openssl enc -d \
-	-md sha512 \
-	-pbkdf2 \
-	-iter 100000 \
-	-aes256 \
-	-pass stdin \
-	-in "$1" <<<"$PASSWORD" 2> /dev/null
-}
-
+# Test Decryption
 decrypt_file "$BOOTSTRAP_FILE" | tar tj &> /dev/null  || {
 	echo "Incorrect password"
 	exit
@@ -50,7 +53,7 @@ decrypt_file "$BOOTSTRAP_FILE" | tar tj &> /dev/null  || {
 echo $(echo -n "$PASSWORD" | sha256sum | sed -r 's/ .*//')
 declare -x SETUP_HASHWORD=$(echo -n "$PASSWORD" | sha256sum | sed -r 's/ .*//')
 declare -x GIT_SSH_COMMAND='ssh -i /etc/kiosk/protected/identity -o IdentitiesOnly=yes'
-
+declare -x FOLDER=$(pwd)
 mkdir -p /etc/kiosk/protected/
 chmod o+rwx,ug-rwx /etc/kiosk/protected
 cd /etc/kiosk/protected
@@ -61,50 +64,19 @@ decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 	chmod u+rw,ugo-x,og-rw *
 }
 
-echo "$FOLDER/.git/"
-[ -e "${FOLDER}/.git/" ] || {
-	echo "Creating repository information"
-	cd "$FOLDER"
-	git clone --bare git@github.com:vt520/kiosk-helpers.git .git &> /dev/null || {
-		echo "Could not clone repository"
-		exit 1
-	}
-	git init &> /dev/null || {
-		echo "Could not initialize repository"
-		exit 1
-	}
-}
-
-[ "$FOLDER" != "/setup/kiosk-helpers" ] && {
+[ "${FOLDER}" != "/setup/kiosk-helpers" ] && {
 	echo "Relocating folder to /setup"
 	mkdir -p /setup
 	rm -rf /setup/kiosk-helpers
-	mv "$FOLDER" /setup/kiosk-helpers
+	mv "${FOLDER}" /setup/kiosk-helpers
 	FOLDER="/setup/kiosk-helpers"
 }
-cd "$FOLDER"
 
 [ -e /setup/kiosk-helpers ] && cd /setup/kiosk-helpers
 
-echo "Updating to current"
-USER_ID="$(id -nu):$(id -ng)"
-
-chown -R $USER_ID /setup/kiosk-helpers
-chmod  u+rwx $(find /setup/kiosk-helpers/* -type d)
-
-git reset --hard &> /dev/null || {
-	echo "Could not reset repository"
-	exit 1
-}
-git pull &> /dev/null || {
-	echo "Could not update to current sources"
-	exit 1
-}
-cd ~
-
 sudo -- chown -R root:root /setup/kiosk-helpers
-cd "$FOLDER"
-mv bootstrap.sh reinstall
+
+mv "$0" reinstall
 chmod +x reinstall
 
 cat <<- EOF
