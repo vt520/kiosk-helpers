@@ -39,7 +39,7 @@ wget -q -cO "${SOURCE_CHANNEL}.zip" "https://github.com/${SOURCE_PROVIDER}/archi
 SOURCE_DIRECTORY=$(basename ${SOURCE_PROVIDER})"-${SOURCE_CHANNEL}"
 [ -e "${SOURCE_DIRECTORY}" ] && sudo rm -rf "${SOURCE_DIRECTORY}" 
 
-unzip "${SOURCE_CHANNEL}.zip" > /dev/null && rm "${SOURCE_CHANNEL}.zip" > /dev/null
+unzip -o "${SOURCE_CHANNEL}.zip" > /dev/null && rm "${SOURCE_CHANNEL}.zip" > /dev/null
 
 
 cd "${SOURCE_DIRECTORY}"
