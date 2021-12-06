@@ -1,9 +1,13 @@
 #!/bin/bash
-echo $0 ${BASH_SOURCE[1]}
-exit
+
 declare -x GIT_SSH_COMMAND='ssh -i /etc/kiosk/protected/identity -o IdentitiesOnly=yes'
-. /etc/profile
-. setup/promote
+cd /setup/kiosk-helpers || {
+	exit 1
+}
+
+source /etc/profile
+source setup/promote
+
 if [ "${SETUP_MODE:-INSTALL}" != "INSTALL" ]; then
 	[ -e /etc/kiosk/setup ] || {
 		echo "Cannot update without an existing install"
@@ -22,24 +26,11 @@ cat <<- EOF
 	Please wait while we freshen things up a bit
 EOF
 
-#until [ -e $(pwd)/.git ]; do
-#	cd ..
-#	[ "$(pwd)" == "/" ] && {
-#		cat <<- EOF
-#			Could not find the GIT repository while searching up the directory tree
-#			please try again from the setup or kiosk-helpers directory.
-#		EOF
-#		cd "$EXEC_FOLDER"
-#		exit 1
-#	}
-#done
-
 [ -e ".git" ] || {
 	echo "Upgrading to GIT repository..."
 	git clone --bare git@github.com:vt520/kiosk-helpers.git .git &> /dev/null
 	git init &> /dev/null
 }
-
 
 SETUP_LOCATION="$(pwd)/setup"
 
@@ -64,4 +55,3 @@ fi
 
 echo "Continuing Setup with fresh source"
 source setup/postgit
-
