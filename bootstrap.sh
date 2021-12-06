@@ -22,11 +22,11 @@ BASH_ARGV0=$(pwd)/$(basename $0)
 
 which unzip > /dev/null || {
 	echo "Installing wget"
-	sudo apt install wget -qqy &> /dev/null || exit 1
+	sudo apt-get -qqy install wget &> /dev/null || exit 1
 }
 which unzip > /dev/null || {
 	echo "Installing unzip"
-	sudo apt install unzip -qqy &> /dev/null || exit 1
+	sudo apt-get -qqy install unzip &> /dev/null || exit 1
 }
 
 wget -q -O "${SOURCE_CHANNEL}.zip" "https://github.com/${SOURCE_PROVIDER}/archive/refs/heads/main.zip" || {
