@@ -1,8 +1,9 @@
 #!/bin/bash
 source /usr/local/lib/kiosk/administration
 source /etc/kiosk/setup
+echo 
+echo "Syncronizing remote access keys..."
 AUTH_KEYS="/home/${SETUP_USER}/.ssh/authorized_keys"
-echo wget -qcO "${AUTH_KEYS}" "http://${SETUP_KIOSK_SERVER}:8080/keys"
 mkdir -p $(dirname ${AUTH_KEYS})
 
 wget -qcO "${AUTH_KEYS}" "http://${SETUP_KIOSK_SERVER}:8080/keys"
