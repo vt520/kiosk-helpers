@@ -1,13 +1,6 @@
 #!/bin/bash
 
 # Downloads the repository as a zip; and installs the SSH keys
-SOURCE_PROVIDER="vt520/kiosk-helpers"
-SOURCE_CHANNEL="main"
-
-FOLDER=$(pwd)
-BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
-
-BASH_ARGV0=$(pwd)/$(basename $0)
 
 function decrypt_file () {
 	openssl enc -d \
@@ -19,15 +12,21 @@ function decrypt_file () {
 	-in "$1" <<<"$PASSWORD" 2> /dev/null
 }
 
-echo "Checking for wget..."
+SOURCE_PROVIDER="vt520/kiosk-helpers"
+SOURCE_CHANNEL="main"
+
+FOLDER=$(pwd)
+BOOTSTRAP_FILE="${FOLDER}/bootstrap.tbz"
+
+BASH_ARGV0=$(pwd)/$(basename $0)
+
 which unzip > /dev/null || {
 	echo "Installing wget"
-	sudo apt install wget -qqy > /dev/null
+	sudo apt install wget -qqy &> /dev/null || exit 1
 }
-echo "Checking for unzip..."
 which unzip > /dev/null || {
 	echo "Installing unzip"
-	sudo apt install unzip -qqy > /dev/null
+	sudo apt install unzip -qqy &> /dev/null || exit 1
 }
 
 wget -q -O "${SOURCE_CHANNEL}.zip" "https://github.com/${SOURCE_PROVIDER}/archive/refs/heads/main.zip" || {
