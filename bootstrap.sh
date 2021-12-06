@@ -74,7 +74,8 @@ declare -x FOLDER=$(pwd)
 	echo "Relocating folder to /setup"
 	mkdir -p /setup
 	rm -rf /setup/kiosk-helpers
-	mv "." /setup/kiosk-helpers
+	cd ..
+	mv "${SOURCE_DIRECTORY}" /setup/kiosk-helpers
 	FOLDER="/setup/kiosk-helpers"
 }
 
