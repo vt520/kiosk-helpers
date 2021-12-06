@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -x GIT_SSH_COMMAND='ssh -i /etc/kiosk/protected/identity -o IdentitiesOnly=yes'
+declare -x GIT_SSH_COMMAND='ssh -i /etc/kiosk/protected/identity -o IdentitiesOnly=yes,StrictHostKeyChecking=off'
 cd /setup/kiosk-helpers || {
 	exit 1
 }

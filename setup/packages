@@ -16,9 +16,9 @@ while read PACKAGE ; do
 	else
 		(
 			echo -n "!"
-			( apt-get install -qqdy $PACKAGE > /dev/null ) \
+			( apt-get install -qqdy $PACKAGE &> /dev/null ) \
 			&& ( DEBIAN_FRONTEND=noninteractive \
- 			apt-get install -qqy $PACKAGE  > /dev/null )
+ 			apt-get install -qqy $PACKAGE  &> /dev/null )
 		) || {
 			echo $PACKAGE failed to install
 			exit 1
