@@ -2,8 +2,8 @@
 
 EXEC_USER_ID=$(id -u)
 [ $EXEC_USER_ID -ne 0 ] && {
-	echo $(pwd) $EXEC_USER_ID ${FOLDER}/$(basename $0)
+        echo
+        echo "Raising '$0' permissions for user $(id -nu $EXEC_USER_ID)"
         PERM_USER_ID=$EXEC_USER_ID sudo -Eu root -- $0 $@
-
         exit $?
 }
