@@ -27,7 +27,8 @@ update-grub &> /dev/null
 echo
 echo "Setting up system services"
 systemctl daemon-reload &> /dev/null || bail "Could not reload daemons"
-systemctl enable management.service &> /dev/null || bail "management service not configured"
+systemctl enable system-updates.timer &> /dev/null || bail "Update service not configured"
+systemctl enable management.service &> /dev/null || bail "Management service not configured"
 systemctl enable display-manager.service &> /dev/null || bail "Display manager not configured"
 systemctl disable cloud-init &> /dev/null || bail "Could not disable cloud init"
 

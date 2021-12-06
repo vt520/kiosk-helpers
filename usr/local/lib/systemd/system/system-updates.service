@@ -1,0 +1,14 @@
+[Unit]
+Description=Automatic Upgrade Agent
+After=network.target
+Wants=system-updates.timer
+
+[Service]
+Type=simple
+User=root
+EnvironmentFile=/etc/kiosk/generated/management
+ExecStart=/usr/local/sbin/do-update-system
+Slice=updates.Slice
+
+[Install]
+WantedBy=multi-user.target
