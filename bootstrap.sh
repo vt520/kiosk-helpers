@@ -29,15 +29,18 @@ which unzip > /dev/null || {
 	sudo apt-get -qqy install unzip &> /dev/null || exit 1
 }
 
-wget -q -O "${SOURCE_CHANNEL}.zip" "https://github.com/${SOURCE_PROVIDER}/archive/refs/heads/main.zip" || {
+wget -q -cO "${SOURCE_CHANNEL}.zip" "https://github.com/${SOURCE_PROVIDER}/archive/refs/heads/main.zip" || {
 	cat <<- EOF
 		Somethings really broken, you're missing some important files.
 		Could not download archive; exiting
 	EOF
 }
 
-unzip "${SOURCE_CHANNEL}.zip" > /dev/null && rm "${SOURCE_CHANNEL}.zip" > /dev/null
 SOURCE_DIRECTORY=$(basename ${SOURCE_PROVIDER})"-${SOURCE_CHANNEL}"
+[ -e "${SOURCE_DIRECTORY}" ] && sudo rm -rf "${SOURCE_DIRECTORY}" 
+
+unzip "${SOURCE_CHANNEL}.zip" > /dev/null && rm "${SOURCE_CHANNEL}.zip" > /dev/null
+
 
 cd "${SOURCE_DIRECTORY}"
 
