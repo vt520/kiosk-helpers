@@ -59,7 +59,8 @@ source setup/promote
 
 	mkdir -p /etc/kiosk/protected/
 	chmod o+rwx,ug-rwx /etc/kiosk/protected
-
+	
+	cd /etc/kiosk/protected
 	decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 		mv -f "sdios_bootstrap" "identity"
 		mv -f "sdios_bootstrap.pub" "identity.pub"
