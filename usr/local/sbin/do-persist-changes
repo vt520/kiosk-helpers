@@ -6,7 +6,7 @@ ARCHIVE_STAMP="${KIOSK_TIMESTAMP}.tbz"
 ARCHIVE_FILE=${KIOSK_PERSIST%%.tbz}-${ARCHIVE_STAMP}
 
 echo Saving snapshot to archive: $ARCHIVE_FILE
-service gdm stop &> /dev/null
+systemctl stop display-manager.service &> /dev/null
 EXCLUDE=$(tempfile -p exclude)
 pushd $KIOSK_PROFILE &> /dev/null
 
