@@ -46,7 +46,13 @@ USER_PATH=$(dbus-send --print-reply=literal --system --dest=org.freedesktop.Acco
 
 dbus-send --print-reply --system --dest=org.freedesktop.Accounts $USER_PATH org.freedesktop.Accounts.User.SetXSession string:'kiosk'
 
+echo 
+echo "Applying profile"
+do-reset-profile
 make-key > "${KIOSK_PROFILE}/.nonce"
+do-persist-changes
+echo "Done"
+
 rm /var/www/session &>/dev/null
 ln -s "${KIOSK_PROFILE}/.nonce" /var/www/session
 
