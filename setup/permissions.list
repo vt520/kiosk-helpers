@@ -5,4 +5,6 @@ root:root ug+rwx,o+rx,o-w var
 root:root a+rx,u+w,go-w usr/local/bin/*
 :runtime: a+rx setup/*
 :runtime: a-x setup/*.list
+root:root a+rx,u+w,gu-w /setup/kiosk-helpers/setup/*
+root:root a-x /setup/kiosk-helpers/setup/*.*
 root:root u+rw,u-x,go-rwx etc/libvirt/qemu/win10.xml

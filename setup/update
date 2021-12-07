@@ -1,2 +1,2 @@
 #!/bin/bash
-SETUP_MODE="upgrade" sudo -E -- setup/install
+SETUP_MODE="upgrade" setup/install
