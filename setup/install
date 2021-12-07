@@ -13,6 +13,7 @@ if [ "${SETUP_MODE:-INSTALL}" != "INSTALL" ]; then
 		echo "Cannot update without an existing install"
 		exit 1
 	}
+	source etc/kiosk/setup
 	source /etc/kiosk/setup
 	PERM_USER_ID=$(id -u $SETUP_USER)
 fi
