@@ -1,8 +1,9 @@
 #!/bin/bash
-source /usr/local/lib/kiosk/user
-source /etc/kiosk/setup
 [ -e ${KIOSK_PROFILE}/.nonce ] && NONCE=$(<${KIOSK_PROFILE}/.nonce)
 [ x == x${NONCE} ] && NONCE=candy
+
+source /usr/local/lib/kiosk/user
+source /etc/kiosk/setup
 
 SETUP_URL_TEMPLATE=$(echo "${SETUP_URL_TEMPLATE}" | sed -r "s/\{nonce\}/$NONCE/g")
 
