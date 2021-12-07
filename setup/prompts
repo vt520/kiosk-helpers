@@ -15,7 +15,7 @@ done
 TEMPFILE=$(tempfile)
 compgen -v | grep "^SETUP_" \
 | while read SETUP_VAR; do
-	echo $SETUP_VAR="${!SETUP_VAR}" >> $TEMPFILE
+	echo $SETUP_VAR=\"${!SETUP_VAR}\" >> $TEMPFILE
 done
 
 cp $TEMPFILE etc/kiosk/setup
