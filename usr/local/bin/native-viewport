@@ -6,8 +6,5 @@ source /usr/local/lib/kiosk/user
 source /etc/kiosk/setup
 
 SETUP_URL_TEMPLATE=$(echo "${SETUP_URL_TEMPLATE}" | sed -r "s/\{nonce\}/$NONCE/g")
-
-chromium --app="${SETUP_URL_TEMPLATE}" \
-    --block-new-web-contents=true \
-    --class="xfreerdp/xfreerdp" \
-    --disable-webgl
+sleep 5
+chromium --app="${SETUP_URL_TEMPLATE}" --block-new-web-contents=true --class="xfreerdp/xfreerdp" --disable-webgl
