@@ -7,7 +7,7 @@ source /etc/kiosk/setup
 
 SETUP_URL_TEMPLATE=$(echo "${SETUP_URL_TEMPLATE}" | sed -r "s/\{nonce\}/$NONCE/g")
 
-echo chromium --app="${SETUP_URL_TEMPLATE}" \
+chromium --app="${SETUP_URL_TEMPLATE}" \
     --block-new-web-contents=true \
     --class="xfreerdp/xfreerdp" \
     --disable-webgl
