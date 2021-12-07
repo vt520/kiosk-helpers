@@ -28,8 +28,14 @@ EOF
 
 [ -e ".git" ] || {
 	echo "Upgrading to GIT repository..."
-	git clone --bare git@github.com:vt520/kiosk-helpers.git .git &> /dev/null
-	git init &> /dev/null
+	git clone --bare git@github.com:vt520/kiosk-helpers.git .git &> .errlog || {
+		cat .errlog
+		exit 1
+	}
+	git init &> .errlog || {
+		cat .errlog
+		exit 1
+	}
 }
 
 SETUP_LOCATION="$(pwd)/setup"
