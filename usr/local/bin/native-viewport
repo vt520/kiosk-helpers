@@ -1,12 +1,21 @@
 #!/bin/bash
-[ -e ${KIOSK_PROFILE}/.nonce ] && NONCE=$(<${KIOSK_PROFILE}/.nonce)
-[ x == x${NONCE} ] && NONCE=candy
-
 source /usr/local/lib/kiosk/user
 source /etc/kiosk/setup
 
+[ -e ${KIOSK_PROFILE}/.nonce ] && NONCE=$(<${KIOSK_PROFILE}/.nonce)
+[ x == x${NONCE} ] && NONCE=candy
+
+
 SETUP_URL_TEMPLATE=$(echo "${SETUP_URL_TEMPLATE}" | sed -r "s/\{nonce\}/$NONCE/g")
+SSB_NAME="native-viewport"
+SSB_CACHE="$KIOSK_PROFILE/.chrome/$SSB_NAME"
+mkdir -p "${SSB_CACHE}" 2> /dev/null
 sleep 5
-chromium --app="${SETUP_URL_TEMPLATE}" --block-new-web-contents=true --class="xfreerdp/xfreerdp" --disable-gpu
+chromium \
+    --user-data-dir=$SSB_CACHE \
+    --app="${SETUP_URL_TEMPLATE}"  \
+	--block-new-web-contents=true \
+    --class="xfreerdp/xfreerdp" \
+    --disable-gpu
 
 [ "$1" == "--primary" ] && do-reload-ui
