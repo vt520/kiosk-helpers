@@ -3,6 +3,8 @@
 cd "$SETUP_LOCATION"
 cd ..
 
+declare -x SETUP_RELEASE=$(git log -1 --pretty=%B)
+
 echo
 echo "Applying Settings Templates"
 setup/template || {
