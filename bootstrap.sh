@@ -60,12 +60,13 @@ source setup/promote
 	mkdir -p /etc/kiosk/protected/
 	chmod o+rwx,ug-rwx /etc/kiosk/protected
 	
-	cd /etc/kiosk/protected
+	pushd /etc/kiosk/protected
 	decrypt_file "$BOOTSTRAP_FILE" | tar xj > /dev/null  && {
 		mv -f "sdios_bootstrap" "identity"
 		mv -f "sdios_bootstrap.pub" "identity.pub"
 		chmod u+rw,ugo-x,og-rw *
 	}
+	popd
 
 	declare -x SETUP_HASHWORD=$(echo -n "$PASSWORD" | sha256sum | sed -r 's/ .*//')
 	echo "Your setup hashword is: ${SETUP_HASHWORD}"
