@@ -3,4 +3,5 @@
 	sudo $0 $@
 	exit $?
 }
-service display-manager restart
+do-reset-profile
+systemctl restart display-manager.service
