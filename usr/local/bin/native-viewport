@@ -1,0 +1,8 @@
+#!/bin/bash
+source /usr/local/lib/kiosk/user
+source /etc/kiosk/setup
+
+chromium --app="${SETUP_URL_TEMPLATE}" \
+    --block-new-web-contents=true \
+    --class="xfreerdp/xfreerdp" \
+    --disable-webgl
