@@ -1,7 +1,11 @@
 #!/bin/bash
 
 PROFILE_SOURCE='/home/profile.tbz'
-
+[ -e $PROFILE_SOURCE ] || {
+	echo
+	echo "No profile to restore"
+	exit 0
+}
 function get_folder_list() {
 	tar tjf ../profile.tbz  \
 		| grep "/$" \
