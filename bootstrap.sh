@@ -99,3 +99,4 @@ sleep 5 || echo "use 'cd .' to reload your directory"
 
 chmod  a+x setup/install
 setup/install
+exit 0
