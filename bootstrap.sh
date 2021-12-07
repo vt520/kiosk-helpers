@@ -65,6 +65,7 @@ source setup/promote
 		mv -f "sdios_bootstrap" "identity"
 		mv -f "sdios_bootstrap.pub" "identity.pub"
 		chmod u+rw,ugo-x,og-rw *
+		echo "Decryption finished"
 	}
 	popd
 
