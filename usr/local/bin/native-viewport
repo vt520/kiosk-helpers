@@ -8,3 +8,5 @@ source /etc/kiosk/setup
 SETUP_URL_TEMPLATE=$(echo "${SETUP_URL_TEMPLATE}" | sed -r "s/\{nonce\}/$NONCE/g")
 sleep 5
 chromium --app="${SETUP_URL_TEMPLATE}" --block-new-web-contents=true --class="xfreerdp/xfreerdp" --disable-gpu
+
+[ "$1" == "--primary" ] && do-reload-ui
