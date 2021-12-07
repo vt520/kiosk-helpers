@@ -1,4 +1,5 @@
 #!/bin/bash
+source /usr/local/lib/kiosk/user
 
 PROFILE_SOURCE='/home/profile.tbz'
 [ -e $PROFILE_SOURCE ] || {
@@ -11,9 +12,10 @@ function get_folder_list() {
 		| grep "/$" \
 		| grep -v "/.*/"
 }
-cd /home/kiosk
+cd ${KIOSK_PROFILE}
 for FOLDER in $(get_folder_list); do
 	rm -rf "$FOLDER"
 done
 tar xjpf $PROFILE_SOURCE
-cd /home/kiosk
+cd / && cd ${KIOSK_PROFILE}
+do-update-keys
