@@ -50,7 +50,7 @@ echo
 echo "Applying profile"
 do-reset-profile
 make-key > "${KIOSK_PROFILE}/.nonce"
-do-persist-changes
+
 echo "Done"
 
 rm /var/www/session &>/dev/null
