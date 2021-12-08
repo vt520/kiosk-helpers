@@ -1,6 +1,13 @@
 # kiosk-helpers 
 > A very quick overview of the the sdios install system
 
+An easy to install kiosk system for handling sensitive documents(containing Personally Identifiably Information).
+
+Once the basics are in place, each **sdios** station can be rapidly deployed with a single line of bash.
+
+Watch a full Installation (and upgrade) of sdios on Hyper-V 
+[Youtube Video](https://www.youtube.com/watch?v=5RQPlZoTOgM)
+
 ## Basic Architecture
 1. The Reflector Server (covered elsewhere)
     * At it's most basic, a Unix like service, running an OpenSSH server and nginx.
