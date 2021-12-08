@@ -9,6 +9,13 @@ Watch a full Installation (and upgrade) of sdios on Hyper-V
 [Youtube Video](https://www.youtube.com/watch?v=5RQPlZoTOgM)
 
 ## Basic Architecture
+0. Design Philosophy: Unix Minimalism
+    * Do one thing, and do it well
+    * 80% is 100% of what's needed 90% of the time
+    * Less code is better
+    * Recursion can be explained
+    * Process exceptions and exit if found before enforcing the security layer.
+    * Each layers security must be considered before returning a value.
 1. The Reflector Server (covered elsewhere)
     * At it's most basic, a Unix like service, running an OpenSSH server and nginx.
 
