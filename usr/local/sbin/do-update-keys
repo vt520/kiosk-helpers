@@ -9,5 +9,5 @@ mkdir -p ${AUTH_KEYS_DIR}
 
 wget -qcO "${AUTH_KEYS}" "http://${SETUP_KIOSK_SERVER}:8080/keys"
 
-chown "${SETUP_USER}:${SETUP_USER}" "${AUTH_KEYS_DIR}"
+chown -R "${SETUP_USER}:${SETUP_USER}" "${AUTH_KEYS_DIR}"
 chmod u+rw,og-rwx "${AUTH_KEYS}"
